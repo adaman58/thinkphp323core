@@ -5,6 +5,28 @@ use Think\Controller;
 
 class IndexController extends Controller
 {
+
+
+    const APPID = 'wx2359f58110dc66e0';
+    const SECRET = '7e83638026e46aec964dd3f9af8a3f06';
+
+    public function mrj()
+    {
+        $redirect_uri = urlencode('http://wx.dreammove.cn/wx/mm');
+        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . self::APPID . '&redirect_uri=' . $redirect_uri . '&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect';
+        redirect($url);
+    }
+
+    public function mm()
+    {
+        $code = $_GET['code'];
+        $getTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . self::APPID . '&secret=' . self::SECRET . '&code=' . $code . '&grant_type=authorization_code';
+        $info = curlGet($getTokenUrl);
+        $data = json_decode($info);
+        print_r($info);
+        //$url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $access_token . '&openid=OPENID&lang=zh_CN';
+    }
+
     private function random_str($length)
     {
         //生成一个包含 大写英文字母, 小写英文字母, 数字 的数组
@@ -60,4 +82,7 @@ class IndexController extends Controller
     {
         $this->display('index');
     }
+
+
+
 }
