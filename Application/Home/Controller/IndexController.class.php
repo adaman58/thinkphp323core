@@ -10,7 +10,7 @@ class IndexController extends Controller
     const APPID = 'wx2359f58110dc66e0';
     const SECRET = '7e83638026e46aec964dd3f9af8a3f06';
 
-    public function mrj()
+    public function Mrj()
     {
         $redirect_uri = urlencode('http://wx.dreammove.cn/wx/mm');
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . self::APPID . '&redirect_uri=' . $redirect_uri . '&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect';
@@ -78,8 +78,9 @@ class IndexController extends Controller
         $this->display();
     }
 
-    public function index2()
+    public function Index2()
     {
+    	echo "--!!!!!";exit();
         $this->display('index');
     }
 
