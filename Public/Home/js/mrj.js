@@ -106,8 +106,6 @@ $(function () {
         $('.fat-value').html(value)
         $('.view-result').addClass(bmi_text)
 
-
-        share(bmi, bmi_text, value)
         var $modal = $('.modal-loading').modal()
         setTimeout(function () {
             $modal.modal('hide')
