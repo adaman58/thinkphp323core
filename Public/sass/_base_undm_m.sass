@@ -1,0 +1,723 @@
+@import "bourbon/bourbon"
+@import "variable_m"
+
+
+
+
+$body-background-alternative: #F7F8FA
+
+html
+    color: $text-color
+    font-size: 16px
+    line-height: $line-height-base
+    box-sizing: border-box
+
+body
+    font-family: $font-family-base
+    font-size: $fz-base
+    padding-top: $header-height
+    padding-bottom: $footer-height
+    word-break: break-all
+    word-wrap: break-word
+
+    &.bg
+        background: $body-background-alternative
+    &.padding-header
+        padding-top: $header-height
+
+var
+    font-style: normal
+
+*, *:before, *:after
+    box-sizing: inherit
+
+\::-moz-selection
+    background: #b3d4fc
+    text-shadow: none
+
+\::selection
+    background: #b3d4fc
+    text-shadow: none
+
+h1, h2, h3, h4, h5, h6
+    font-weight: normal
+
+a
+    color: inherit
+    &:visited
+        color: inherit
+    &:hover
+        color: $c-primary
+    &:active
+        color: $c-primary-dark
+    &.full
+        display: inline-block
+        width: 100%
+        height: 100%
+
+u
+    text-decoration: none
+
+hr
+    display: block
+    height: 1px
+    border: 0
+    border-top: 1px solid #ccc
+    margin: 1em 0
+
+audio, canvas, iframe, img, svg, video
+    vertical-align: middle
+
+fieldset
+    border: 0
+    margin: 0
+    padding: 0
+
+input
+    line-height: inherit
+
+label
+    cursor: pointer
+
+textarea
+    resize: vertical
+
+ul
+    margin: 0
+    padding: 0
+    list-style-type: none
+
+a
+    text-decoration: none
+
+img
+    max-width: 100%
+
+%btn
+    display: inline-block
+    padding: .4em .8em
+    font-weight: 400
+    text-align: center
+    white-space: nowrap
+    vertical-align: middle
+    touch-action: manipulation
+    cursor: pointer
+    border: 1px solid transparent
+    background: transparent
+    border-radius: 2px
+    transition: all .4s
+    user-select: none
+    &:hover, &:focus
+        outline: none
+    &:active
+        outline: none
+    &[disabled]
+        cursor: default
+
+button, .btn
+    @extend %btn
+
+/* 三种样式
+/* .btn-o .btn-link .btn-primary
+
+@each $c in primary, danger, success
+    .btn-#{$c}
+        color: white
+        background-color: color($c)
+        border-color: color($c)
+        &:visited
+            color: white
+        &:hover, &:focus
+            color: white
+            background-color: color($c, dark)
+            border-color: color($c, dark)
+        &:active
+            color: white
+            background-color: color($c, darker)
+            border-color: color($c, darker)
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+        &[disabled]
+            color: $c-white-dark
+            background-color: $c-white-smoke
+            border-color: transparent
+
+.btn-athens
+    color: $c-black-lighter
+    background-color: $c-white-athens
+    border-color: transparent
+    &:hover, &:focus
+        color: $c-black-light
+        background-color: scale_color($c-white-athens, $lightness: -10%)
+    &:active
+        color: $c-black
+        background-color: scale_color($c-white-athens, $lightness: -20%)
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+.btn-smoke
+    background-color: $c-white-smoke
+
+.btn-o
+    color: $c-black-dark
+    background-color: white
+    border-color: $c-white
+    &:hover, &:focus
+        background-color: $c-white-smoke
+        border-color: $c-white
+    &:active
+        background-color: $c-white-lighter
+        border-color: $c-white-dark
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+    @each $c in primary, danger
+        &.c-#{$c}
+            color: color(#{$c})
+            border-color: color(#{$c}, light)
+            &:hover, &:focus
+                background-color: scale_color(color(#{$c}), $lightness: 95%)
+            &:active
+                background-color: scale_color(color(#{$c}), $lightness: 90%)
+                box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+.btn-square
+    border-radius: 0
+
+.btn-link
+    color: $text-color
+    &:hover, &:focus
+        color: $c-primary-dark
+    &:active
+        color: $c-primary-darker
+    @each $c in primary, danger
+        &.c-#{$c}
+            color: color(#{$c})
+            &:hover, &:focus
+                color: color(#{$c}, dark)
+            &:active
+                color: color(#{$c}, darker)
+
+.btn[disabled], fieldset[disabled] .btn
+    color: $c-black
+    background-color: #fff
+    border-color: #ccc
+    pointer-events: none
+    cursor: not-allowed
+    box-shadow: none
+    opacity: .65
+
+.btn-large
+    font-size: $fz-large
+    padding: .5em 2.5em
+
+button, .btn
+    &.error
+        border-color: $c-danger
+        &:focus
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px color(danger, normal, .6)
+
+%input
+    width: 100%
+    padding: .6em .8em
+    font-size: inherit
+    border: 1px solid #ccc
+    border-radius: 4px
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    &:focus
+        border-color: #66afe9
+        outline: 0
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px color(info, normal, .6)
+    &.error
+        border-color: $c-danger
+        &:focus
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px color(danger, normal, .6)
+    &.success
+        border-color: $c-success
+    &.ghost
+        background-color: transparent
+        border-color: transparent
+        box-shadow: none
+        border-radius: 0
+        &.error
+            border-bottom: 1px solid $c-danger
+            &:focus
+                box-shadow: none
+        &[disabled]
+            background-color: transparent
+
+    &[disabled]
+        background-color: $c-white-smoke
+
+input[type="text"], input[type="password"],
+input[type="email"], input[type="tel"], input[type="url"], input[type="number"], input[type="search"],
+textarea
+    @extend %input
+textarea
+    line-height: $line-height-base
+
+.ctrl-wrap
+    position: relative
+
+.ctrl-ghost
+    input[type=radio], input[type=checkbox]
+        position: absolute
+        z-index: -1
+        opacity: 0
+
+input.ghost-hidden
+    +ghost-hidden
+
+input[type="number"], input[type="tel"]
+    font-family: $font-family-monospace
+    letter-spacing: 2px
+
+.input-prefix
+    position: relative
+    &:before
+        content: attr(data-prefix)
+        position: absolute
+        left: 0
+        top: 1px
+        padding: .6em .8em
+    input
+        padding-left: 1.8em
+
+.input-suffix
+    position: relative
+    &:after
+        content: attr(data-suffix)
+        position: absolute
+        right: 0
+        top: 0
+        padding: .6em .8em
+    input
+        padding-right: 3em
+
+.close
+    float: right
+    font-size: 21px
+    font-weight: 700
+    line-height: 1
+    color: #000
+    text-shadow: 0 1px 0
+    opacity: .2
+    cursor: pointer
+    &:hover
+        opacity: .5
+
+.caret-up
+    +caret(up, shade(#C7C7C7, 90%), #fbfbfb, 8px, 1px, absolute, (top: -8px, left: 7px))
+
+.caret-down
+    +caret(down, shade(#C7C7C7, 90%), #fbfbfb, 8px, 1px, absolute, (bottom: -8px, left: 7px))
+
+.caret-left
+    +caret(left, shade(#c7c7c7, 90%), #fbfbfb, 8px, 1px, absolute, (top: 7px, left: -8px))
+
+.caret-right
+    +caret(right, shade(#c7c7c7, 90%), #fbfbfb, 8px, 1px, absolute, (top: 7px, right: -8px))
+
+@keyframes bubble
+    0%
+        opacity: 0
+    100%
+        opacity: 1
+
+.bubble
+    font-size: 14px
+    background: #FBFBFB
+    border: 1px solid #C7C7C7
+    border-bottom-color: #A4A4A4
+    border-radius: 3px
+    box-shadow: 0 2px 2px -1px #A4A4A4
+    max-width: 450px
+    padding: .5em
+    z-index: 999
+    animation: bubble .4s
+    white-space: nowrap
+
+.bubble-wrap
+    position: relative
+
+.word-count
+    position: absolute
+    right: 8px
+    bottom: 10px
+    color: $c-white-dark
+
+input ~ .word-count
+    top: 50%
+    margin-top: -10px
+
+.line-header
+    border-bottom: 1px solid $c-white
+    padding-left: 1em
+    line-height: 2.2
+    position: relative
+    &:before
+        content: ''
+        display: inline-block
+        vertical-align: top
+        width: 4px
+        height: 1em
+        background: $c-primary-pure
+        position: absolute
+        left: 0
+        top: 50%
+        margin-top: -0.5em
+
+.note
+    padding: 1em
+    border-radius: 4px
+    &.note-warning
+        color: $c-black
+        border: 1px solid $c-warning-light
+    &.note-danger
+        color: $c-danger
+        background-color: $c-warning-lighter
+        border: 1px solid $c-warning-light
+
+.divider
+    position: relative
+    text-align: center
+    &:after
+        +absolute-block
+        width: 100%
+        height: 1px
+        background: $c-white-lighter
+        top: 50%
+        left: 0
+    .title
+        background: white
+        padding: 0 10px
+        position: relative
+        z-index: 2
+
+.sep
+    +border(right, $c-white-lighter, 80%)
+.sep-1
+    +border(right, $c-white-lighter, 100%)
+
+.city-select
+    .dropdown-content
+        position: absolute
+        width: 100%
+        z-index: 9
+        left: 0
+    .tab-title
+        +inline-block-wrapper(nowrap)
+        background-color: white
+        li
+            +inline-block($fz-base)
+            text-align: center
+            background: $c-white-smoke
+            border: 1px solid $c-white-light
+            border-left: none
+            width: 50%
+            line-height: 40px
+            cursor: pointer
+            &:first-child
+                border-left: 1px solid $c-white-light
+            &.active
+                background: white
+                border-bottom: none
+
+    .tab-content
+        +inline-block-wrapper
+        border: 1px solid $c-white-light
+        border-top: none
+        background-color: white
+        li
+            +inline-block($fz-base)
+            background: white
+            padding: 1em
+        u
+            display: inline-block
+            text-decoration: none
+            padding: 4px 12px
+            margin: 5px
+            border-radius: 3px
+            cursor: pointer
+            &:hover
+                color: $c-primary-darker
+                background: scale_color($c-primary-lighter, $lightness: 50%)
+            &.checked
+                color: white
+                background: $c-primary
+
+.status-off
+    .on
+        display: none
+
+.status-on
+    color: $c-primary
+    .off
+        display: none
+
+.page-list
+    text-align: center
+    .btn
+        width: auto
+        margin: 0 2px
+        background-color: #fff
+        border: 1px solid $c-white-lighter
+    .disabled
+        color: $c-white-dark
+        cursor: default
+        &:hover
+            color: $c-white-dark
+    .active
+        color: white
+        background-color: $c-primary
+        cursor: default
+        &:hover
+            color: white
+
+
+.panel
+    margin-bottom: 12px
+    padding: 10px
+    +border(top)
+    +border(bottom)
+    background-color: #fff
+
+.panel-header
+    padding: 15px 15px 15px 25px
+    margin: 0
+    position: relative
+    line-height: 1
+    font-size: $fz-medium
+    color: $c-primary
+    +border
+    &:before
+        +absolute-block
+        width: 4px
+        height: 1em
+        left: 8px
+        top: 50%
+        margin-top: -0.5em
+        border-radius: 2px
+        background-color: $c-primary
+    .if
+        transition: all .4s
+    &.unfold
+        .if
+            transform: rotate(180deg)
+
+.list .item
+    padding: 10px
+    background-color: #fff
+    +border
+    &:first-child
+        +border(top)
+.percent-circle
+    $w: 96px
+    position: relative
+    width: $w
+    height: $w
+    text-align: center
+    margin: 0 auto
+    color: $c-primary
+    .text
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        line-height: $w
+        font-size: 20px
+
+.fly-hint
+    position: absolute
+
+.check-triangle
+    input[type=radio], input[type=checkbox]
+        position: absolute
+        opacity: 0
+        z-index: -1
+        &:checked + label
+            color: $c-primary
+            border-color: $c-primary
+            .icon-check-triangle
+                color: $c-primary
+    label
+        position: relative
+        display: inline-block
+        padding: .3em .8em
+        border: 1px solid $c-white
+        user-select: none
+    .icon-check-triangle
+        color: $c-white
+
+
+.headroom
+    transition: transform .4s
+.s-header
+    position: fixed
+    z-index: 9
+    top: 0
+    left: 0
+    width: 100%
+    height: $header-height
+    line-height: $header-height
+    background: $c-brand
+    color: white
+    font-size: $fz-medium
+    text-align: center
+
+    &.headroom--unpinned
+        transform: translateY(-100%)
+
+
+.s-footer
+    position: fixed
+    z-index: 9
+    bottom: 0
+    left: 0
+    width: 100%
+    height: $footer-height
+    &.headroom--unpinned
+        transform: translateY(100%)
+
+
+.s-footer-index
+    &:before
+        +absolute-block
+        width: 100%
+        height: 1px
+        top: 0
+        left: 0
+        background-color: $c-white-lighter
+        transform: scaleY(0.5)
+    background-color: #fff
+    & > div
+        text-align: center
+        +flex(1)
+        &.active
+            color: $c-primary
+    p
+        margin: 0
+
+.swipe
+    overflow: hidden
+    visibility: hidden
+    position: relative
+
+.swipe-wrap
+    overflow: hidden
+    position: relative
+
+.swipe-wrap > div
+    float: left
+    width: 100%
+    position: relative
+
+.dots-wrap
+    position: absolute
+    width: 100%
+    bottom: 5px
+    text-align: center
+    u
+        display: inline-block
+        width: 8px
+        height: 8px
+        margin: 0 5px
+        border-radius: 4px
+        background-color: rgba(0, 0, 0, .2)
+        &.active
+            background-color: rgba(0, 0, 0, .5)
+
+.flex
+    +display(flex)
+
+.space-around
+    +justify-content(space-around)
+
+.space-between
+    +justify-content(space-between)
+
+.flex-center
+    +justify-content(center)
+.direction-column
+    +flex-direction(dolumn)
+.flex-wrap
+    +flex-wrap(wrap)
+.flex-nowrap
+    +flex-wrap(nowrap)
+
+// align-items-center
+.aic
+    +align-items(center)
+
+.flex-1
+    +flex(1)
+@for $i from 1 through 10
+    .flex-#{$i}
+        +flex($i)
+
+.tooltip
+    position: relative
+    &:hover
+        .tooltip-content
+            transition-duration: .4s
+            opacity: 1
+            transform: translateX(0)
+.tooltip-content
+    $bgc: change_color($c-primary, $lightness: 50%)
+    $borderColor: change_color($c-primary, $lightness: 50%)
+    opacity: 0
+    transform: translateX(20px)
+    transition: all .2s
+    +caret(right, $borderColor, $bgc, 8px, 1, absolute, (right: -8px, top: 11px))
+    position: absolute
+    min-width: 200px
+    min-height: 42px
+    right: 90px
+    top: -15px
+    padding: 10px
+    border-radius: 4px
+    border: 1px solid $borderColor
+    color: white
+    background-color: $bgc
+.tooltip-medium
+    min-width: 400px
+.tooltip-large
+    min-width: 600px
+
+.bb
+    +border
+.bt
+    +border(top)
+
+@for $i from 1 through 16
+    $rem: $i / 2
+    .ci-#{$i} img
+        width: #{$rem}rem
+        height: #{$rem}rem
+        border-radius: #{$rem / 2}rem
+
+
+
+.s-copyright
+    text-align: center
+    color: $c-black-lighter
+    background: black
+    line-height: 3
+
+
+
+.infinite-loading
+    .end-text
+        display: none
+    &.end
+        .loading-text
+            display: none
+        .end-text
+            color: $c-black-lighter
+            display: inline
+    &.blank
+        .blank
+            display: block
+        .loading-text
+            display: none
+        .end-text
+            display: none
+
+
+.back-substation
+    display: none

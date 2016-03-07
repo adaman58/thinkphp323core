@@ -1,0 +1,160 @@
+@import "variable"
+@import "function"
+@import "mixin"
+@import "susy/susy"
+@import "include-media"
+
+.fade
+    opacity: 0
+    transition: opacity .15s
+    &.in
+        opacity: 1
+
+.modal-open
+    overflow: hidden
+
+.modal
+    display: none
+    overflow: hidden
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 1050
+    -webkit-overflow-scrolling: touch
+    outline: 0
+
+    &.fade .modal-dialog
+        transform: translateY(-25%)
+        transition: transform 0.3s ease-out
+
+    &.in .modal-dialog
+        transform: translate(0, 0)
+
+    .modal-open &
+        overflow-x: hidden
+        overflow-y: auto
+
+.modal-dialog
+    position: relative
+    width: 600px
+    margin-left: auto
+    margin-right: auto
+    .modal-small &
+        width: 400px
+    +media('<=small')
+        width: 94%
+        margin-left: 3%
+
+.modal-content
+    position: relative
+    background-color: #ffffff
+    border: 1px solid #999
+    border: 1px solid rgba(0, 0, 0, 0.2)
+    border-radius: 6px
+    background-clip: padding-box
+    outline: 0
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5)
+
+.modal-backdrop
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 1040
+    background-color: #000
+
+    &.in
+        opacity: 0.5
+    &.white
+        background-color: #fff
+
+.modal-header
+    padding: 10px
+    border-bottom: 1px solid #e5e5e5
+    min-height: 16.42857143px
+
+    .close
+        padding: 0 3px
+        margin-top: -2px
+
+.modal-title
+    margin: 0
+    line-height: 1.42857143
+
+.modal-body
+    position: relative
+    padding: 15px
+
+.modal-footer
+    padding: 15px
+    text-align: right
+    border-top: 1px solid #e5e5e5
+
+    .btn + .btn
+        margin-left: 5px
+        margin-bottom: 0
+
+    .btn-group .btn + .btn
+        margin-left: -1px
+
+    .btn-block + .btn-block
+        margin-left: 0
+
+.modal-scrollbar-measure
+    position: absolute
+    top: -9999px
+    width: 50px
+    height: 50px
+    overflow: scroll
+
+.modal-small
+    .modal-dialog
+        width: 300px
+.modal-large
+    .modal-dialog
+        width: 900px
+
+// 废弃
+.modal-sm
+    width: 300px
+
+.modal-lg
+    width: 900px
+
+.modal-footer
+    +clearfix
+
+.modal-alert, .modal-confirm
+    .modal-dialog
+        max-width: 400px
+
+.modal-confirm
+    .modal-footer
+        button
+            margin-left: 10px
+
+
+
+.dm-notice
+    position: fixed
+    bottom: 15%
+    width: 100%
+    text-align: center
+    transition: all .4s
+    opacity: 0
+    z-index: 999
+    &.in
+        opacity: 1
+    .note
+        display: inline-block
+        padding: 10px 15px
+        background: rgba(40, 40, 40, .6)
+        color: #fff
+        border-radius: 4px
+
+
+
+

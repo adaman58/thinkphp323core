@@ -1,0 +1,171 @@
+.element-invisible
+    position: absolute !important
+    clip: rect(1px 1px 1px 1px)
+    /* IE6, IE7
+    clip: rect(1px, 1px, 1px, 1px)
+
+@keyframes progressmove
+    0%
+        background-position: 0 0
+    100%
+        background-position: 17px 0
+
+.wu
+    $thumb-width: 150px
+    $thumb-height: 150px
+
+    .drop-box
+        border: 2px dashed #ccc
+        text-align: center
+        padding: 1em
+        &.webuploader-dnd-over
+            border-color: #999999
+
+        &.webuploader-dnd-over.webuploader-dnd-denied
+            border-color: red
+
+    .file-list
+        +inline-block-wrapper
+        color: #cccccc
+        text-align: left
+    .file-item
+        +inline-block($fz-base)
+        width: $thumb-width
+        height: $thumb-height
+        margin: 10px
+        background: url(../img/webuploader/bg.png) no-repeat
+        background-size: 100%
+        text-align: center
+        position: relative
+        overflow: hidden
+        &:hover
+            .float-bar
+                opacity: 1
+
+        .title
+            position: absolute
+            left: 0
+            width: 100%
+            text-overflow: ellipsis
+            top: 5px
+            text-indent: 5px
+
+        .progress
+            position: absolute
+            width: 100%
+            bottom: 0
+            left: 0
+            height: 8px
+            overflow: hidden
+            z-index: 50
+
+        .progress span
+            display: none
+            overflow: hidden
+            width: 0
+            height: 100%
+            background: #1483d8 url(../img/webuploader/progress.png) repeat-x
+            transition: width 200ms linear
+            animation: progressmove 2s linear infinite
+
+        .img-wrap
+            position: relative
+            width: $thumb-width
+            height: $thumb-height
+            line-height: $thumb-height
+            overflow: hidden
+            transform-origin: 50% 50%
+            transition: 200ms ease-out
+            z-index: 2
+
+        .error
+            background: #f43838
+            color: #fff
+            position: absolute
+            bottom: 0
+            left: 0
+            height: 28px
+            line-height: 28px
+            width: 100%
+            z-index: 100
+
+        .success
+            display: block
+            position: absolute
+            left: 0
+            bottom: 0
+            height: 40px
+            width: 100%
+            z-index: 200
+            background: url(../img/webuploader/success.png) no-repeat right bottom
+
+        .float-bar
+            position: absolute
+            height: 30px
+            width: 100%
+            top: 0
+            left: 0
+            overflow: hidden
+            z-index: 9
+            opacity: 0
+            transition: all .4s
+        .close
+            padding: 0 3px 2px 3px
+            background-color: white
+            opacity: .8
+            &:hover
+                opacity: 1
+
+
+        .progress
+            border: 1px solid #1483d8
+            width: 198px
+            background: #fff
+            height: 18px
+            position: relative
+            display: inline-block
+            text-align: center
+            line-height: 20px
+            color: #6dbfff
+            margin-right: 10px
+
+            span.percentage
+                width: 0
+                height: 100%
+                left: 0
+                top: 0
+                background: #1483d8
+                position: absolute
+            span.text
+                position: relative
+                z-index: 10
+
+        .info
+            position: absolute
+            width: 100%
+            bottom: 5px
+    .file-item-pdf
+        font-size: $fz-base
+        .close
+            float: none
+            margin-left: 10px
+
+
+.webuploader-container
+    position: relative
+
+.webuploader-element-invisible
+    position: absolute !important
+    clip: rect(1px 1px 1px 1px)
+    /* IE6, IE7
+    clip: rect(1px, 1px, 1px, 1px)
+
+.webuploader-pick
+    @extend .btn
+    @extend .btn-o
+
+.webuploader-pick-hover
+
+.webuploader-pick-disable
+    opacity: 0.6
+    pointer-events: none

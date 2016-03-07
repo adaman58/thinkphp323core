@@ -1,0 +1,195 @@
+@import "../../sass/bourbon/bourbon"
+@import "../../sass/mixin"
+@import "../../sass/variable"
+@import "../../sass/susy/susy"
+
+@import "../../sass/modals"
+
+$breakpoints: (tiny: 360px, small: 480px, medium: 768px, large: 1024px)
+
+@function rem($px)
+    @return $px / 1080 * 20rem
+
++font-face('HYYouRanTiJ', '../../Static/font/HYYouRanTiJ')
+
+html
+    box-sizing: border-box
+
+body
+    font-family: 'HYYouRanTiJ', $font-family-sans-serif
+
+*, *:before, *:after
+    box-sizing: inherit
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+    -webkit-appearance: none
+    margin: 0
+
+.view-win
+    position: absolute
+    top: 0
+    height: 100%
+    left: 0
+    right: 0
+
+.view
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    visibility: hidden
+    opacity: 0
+    transition: all .5s
+    &.in
+        visibility: visible
+        opacity: 1
+
+.view-ready
+    height: 100%
+    background: url("../img/mrj/bg-view-ready.jpg") no-repeat
+    background-size: 100% 100%
+
+.view-index
+    background-repeat: no-repeat
+    background-size: 100% 100%
+    &.thin
+        background-image: url("../img/mrj/bg-index-thin.png")
+    &.normal
+        background-image: url(../img/mrj/bg-index-normal.png)
+    &.fat
+        background-image: url(../img/mrj/bg-index-fat.png)
+
+.view-result
+    background-repeat: no-repeat
+    background-size: 100% 100%
+    &.thin
+        background-image: url(../img/mrj/bg-result-thin.png)
+    &.normal
+        background-image: url(../img/mrj/bg-result-normal.png)
+    &.fat
+        background-image: url(../img/mrj/bg-result-fat.png)
+
+.modal-loading
+    .modal-dialog
+        width: 80%
+        margin-left: 10%
+        border-radius: 10px
+        background: white url("../img/mrj/bg-view-loading.gif") no-repeat center
+        padding-bottom: 255 / 400 * 80%
+        background-size: 100% auto
+
+.icon-share-hint
+    background: url(../img/mrj/icon-share-hint.png) no-repeat
+    background-size: 100% auto
+    width: rem(169)
+    height: rem(170)
+    position: absolute
+    right: 1rem
+    top: .3rem
+
+@keyframes blink
+    0%, 10%, 20%, 100%
+        opacity: 1
+    5%, 15%
+        opacity: 0
+
+.blink
+    animation: blink 3s infinite
+
+@function x($x)
+    @return $x / 750 * 100%
+
+@function y($y)
+    @return $y / 1206 * 100%
+
+@mixin abs_pos($left, $top)
+    position: absolute
+    top: y($top)
+    left: x($left)
+
+@mixin abs_ghost($width, $height)
+    display: block
+    font-size: 0
+    opacity: 0
+    width: x($width)
+    height: y($height)
+
+.view-index
+    .nickname
+        position: absolute
+        right: x(460)
+        top: y(24)
+        font-size: 2rem
+        line-height: 2rem
+        text-align: right
+        +ellipsis(35%)
+    .bmi
+        +abs_pos(526, 125)
+        font-size: 1.8rem
+        line-height: 1.8rem
+    .fat-value
+        +abs_pos(525, 220)
+        font-size: 1.8rem
+        line-height: 1.8rem
+    .btn-ready
+        +abs_pos(195, 860)
+        +abs_ghost(350, 100)
+    .img-qr
+        position: absolute
+        bottom: y(50)
+        left: x(258)
+        width: x(120)
+
+.view-ready
+    .btn-calculate
+        +abs_pos(250, 1010)
+        +abs_ghost(250, 90)
+    .input-height, .input-weight
+        width: x(310)
+        background: transparent
+        border: none
+        text-align: center
+        font-size: 1rem
+        line-height: 1rem
+        opacity: 0.5
+        outline: none
+        display: block
+        position: absolute
+        left: x(250)
+        height: y(66)
+
+    .input-height
+        bottom: y(328)
+    .input-weight
+        bottom: y(230)
+
+.view-result
+    $fz: 1.5rem
+    .nickname
+        position: absolute
+        right: x(490)
+        top: y(130)
+        font-size: $fz
+        line-height: $fz
+        text-align: right
+        +ellipsis(35%)
+    .bmi
+        +abs_pos(535, 130)
+        font-size: $fz
+        line-height: $fz
+    .fat-value
+        +abs_pos(535, 230)
+        font-size: $fz
+        line-height: $fz
+    .btn-share
+        +abs_pos(200, 860)
+        +abs_ghost(338, 90)
+    .img-qr
+        position: absolute
+        bottom: y(50)
+        left: x(258)
+        width: x(120)
+
+

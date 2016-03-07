@@ -97,12 +97,12 @@ function requestWeixinApiPost($url, $postData){
 
 /**
  * 获取 API 授权令牌
- * @return 授权令牌
+ * @return string 授权令牌
  */
 function getToken() {
 	$accessToken = S('SUBSITE_ACCESSTOKEN');
 	if (empty($accessToken)) {
-		$params = C('BUYANK_USER');
+		$params = C('MP');
 		$baseurl = C('WEIXIN_DOMAIN_URL');
 		$api = C('WEIXIN_API');
 
@@ -121,7 +121,7 @@ function getToken() {
 
 /**
  * 获取 API 授权令牌
- * @return 授权令牌
+ * @return string 授权令牌
  */
 function getJsapiTicket() {
 	$ticket = S('SUBSITE_JSAPITICKET');

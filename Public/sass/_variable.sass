@@ -1,0 +1,124 @@
+@import "function"
+
+$c-primary: #3399e0 !default
+$c-primary-pure: scale_color($c-primary, $saturation: 80%)
+$c-primary-pale: scale_color($c-primary, $saturation: -50%)
+$c-primary-dark: scale_color($c-primary, $lightness: -20%)
+$c-primary-darker: scale_color($c-primary, $lightness: -40%)
+$c-primary-light: scale_color($c-primary, $lightness: 30%)
+$c-primary-lighter: scale_color($c-primary, $lightness: 90%)
+$c-primary-map: (normal:$c-primary, pure: $c-primary-pure, pale: $c-primary-pale, dark: $c-primary-dark, darker: $c-primary-darker, light: $c-primary-light, lighter: $c-primary-lighter)
+
+$c-alt: #987346 !default
+$c-alt-pure: scale_color($c-alt, $saturation: 80%)
+$c-alt-pale: scale_color($c-alt, $saturation: -50%)
+$c-alt-dark: scale_color($c-alt, $lightness: -20%)
+$c-alt-darker: scale_color($c-alt, $lightness: -40%)
+$c-alt-light: scale_color($c-alt, $lightness: 30%)
+$c-alt-lighter: scale_color($c-alt, $lightness: 60%)
+$c-alt-map: (normal:$c-alt, pure: $c-alt-pure, pale: $c-alt-pale, dark: $c-alt-dark, darker: $c-alt-darker, light: $c-alt-light, lighter: $c-alt-lighter)
+
+$c-success: #7bb32e !default
+$c-success-pure: scale_color($c-success, $saturation: 80%)
+$c-success-pale: scale_color($c-success, $saturation: -50%)
+$c-success-dark: scale_color($c-success, $lightness: -20%)
+$c-success-darker: scale_color($c-success, $lightness: -40%)
+$c-success-light: scale_color($c-success, $lightness: 30%)
+$c-success-lighter: scale_color($c-success, $lightness: 60%)
+$c-success-map: (normal:$c-success, pure: $c-success-pure, pale: $c-success-pale, dark: $c-success-dark, darker: $c-success-darker, light: $c-success-light, lighter: $c-success-lighter)
+
+$c-danger: #f56e5f
+$c-danger-pure: scale_color($c-danger, $saturation: 90%)
+$c-danger-pale: scale_color($c-danger, $saturation: -50%)
+$c-danger-dark: scale_color($c-danger, $lightness: -20%)
+$c-danger-darker: scale_color($c-danger, $lightness: -40%)
+$c-danger-light: scale_color($c-danger, $lightness: 30%)
+$c-danger-lighter: scale_color($c-danger, $lightness: 90%)
+$c-danger-map: (normal:$c-danger, pure: $c-danger-pure, pale: $c-danger-pale, dark: $c-danger-dark, darker: $c-danger-darker, light: $c-danger-light, lighter: $c-danger-lighter)
+
+$c-info: $c-primary
+$c-info-pure: $c-primary-pure
+$c-info-pale: $c-primary-pale
+$c-info-dark: $c-primary-dark
+$c-info-darker: $c-primary-darker
+$c-info-light: $c-primary-light
+$c-info-lighter: $c-primary-lighter
+$c-info-map: (normal:$c-info, pure: $c-info-pure, pale: $c-info-pale, dark: $c-info-dark, darker: $c-info-darker, light: $c-info-light, lighter: $c-info-lighter)
+
+$c-warning: #FFA500
+$c-warning-pure: scale_color($c-warning, $saturation: 80%)
+$c-warning-pale: scale_color($c-warning, $saturation: -50%)
+$c-warning-dark: scale_color($c-warning, $lightness: -20%)
+$c-warning-darker: scale_color($c-warning, $lightness: -40%)
+$c-warning-light: #F9E4B5
+$c-warning-lighter: #FEF8EA
+$c-warning-map: (normal:$c-warning, pure: $c-warning-pure, pale: $c-warning-pale, dark: $c-warning-dark, darker: $c-warning-darker, light: $c-warning-light, lighter: $c-warning-lighter)
+
+$c-black: #666
+$c-black-dark: #333
+$c-black-darker: #222
+$c-black-light: #808080
+$c-black-lighter: #999
+$c-black-gravel: #444444
+$c-black-map: (normal:$c-black, dark: $c-black-dark, darker: $c-black-darker, light: $c-black-light, lighter: $c-black-lighter, gravel: $c-black-gravel)
+
+$c-white: #ccc
+$c-white-dark: #bbb
+$c-white-darker: #a9a9a9
+$c-white-light: #d4d4d4
+$c-white-lighter: #e6e6e6
+$c-white-smoke: #f9f9f9
+$c-white-athens: #EFF0F4
+$c-white-map: (normal:$c-white, dark: $c-white-dark, darker: $c-white-darker, light: $c-white-light, lighter: $c-white-lighter, smoke: $c-white-smoke, athens: $c-white-athens)
+
+
+$color-map: (primary:$c-primary-map, alt:$c-alt-map, success:$c-success-map, info:$c-info-map, warning:$c-warning-map, danger:$c-danger-map, black:$c-black-map, white:$c-white-map)
+
+@function color($group, $shade:normal, $transparency:1)
+    $group-map: map-get($color-map, $group)
+    @return rgba(map-get($group-map, $shade), $transparency)
+
+$top-nav-bg-color: #333
+
+$brand-primary: $c-primary
+$brand-success: $c-success
+$brand-info: $c-info
+$brand-warning: $c-warning
+$brand-danger: $c-danger
+
+//** Global styles
+$body-background: #fff !default
+$body-background-alternative: #fafafa !default
+$text-color: #333 !default
+// 默认链接样式
+$link-color: $c-primary !default
+$link-hover-color: shade($link-color, 15%) !default
+$link-hover-decoration: underline !default
+
+$font-family-sans-serif: 'Lantinghei SC', 'Open Sans', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif !default
+$font-family-serif: Georgia, "Times New Roman", Times, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", serif !default
+$font-family-monospace: Monaco, Menlo, Consolas, 'Courier New', "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", monospace !default
+$font-family-base: $font-family-sans-serif !default
+
+$line-height-base: 1.4286
+
+$page-width: 1170px
+
+$fz-small: 12px
+$fz-base: 14px !default
+$fz-medium: 16px
+$fz-large: 18px
+$fz-x-large: 20px
+$fz-xx-large: 24px
+$fz-xxx-large: 30px
+
+$susy: (columns: 16, gutters: 1/5, math: static, column-width: 60px, use-custom: (clearfix: true))
+$breakpoints: (tiny: 360px, small: 480px, medium: 768px, large: 1024px)
+
+$defaultColor: $c-primary
+$errorColor: $c-danger
+$warningColor: $c-warning
+$infoColor: $c-info
+$successColor: $c-success
+
+

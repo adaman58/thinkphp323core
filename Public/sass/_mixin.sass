@@ -1,0 +1,342 @@
+@import "function"
+
+
+=opacity($value)
+    opacity: $value
+    filter: alpha(opacity=$value*100)
+
+=transition($value)
+    -webkit-transition: $value
+    transition: $value
+
+=transform($value)
+    -webkit-transform: $value
+    -ms-transform: $value
+    transform: $value
+
+=keyframes($name)
+    @-webkit-keyframes #{$name}
+        @content
+    @keyframes #{$name}
+        @content
+
+=animation($value)
+    -webkit-animation: $value
+    animation: $value
+
+=font-face($family, $src, $weight: normal, $style: normal)
+    @font-face
+        font-family: $family
+        src: url("#{$src}.eot")
+        src: url("#{$src}.eot?#iefix") format("embedded-opentype"), url("#{$src}.woff") format("woff"), url("#{$src}.ttf") format("truetype"), url("#{$src}.svg##{$family}") format("svg")
+        font-style: $style
+        font-weight: $weight
+
+=inline-block-wrapper($white-space: null)
+    font-size: 0
+    @if $white-space
+        white-space: $white-space
+
+=inline-block($font-size: $fz-base)
+    display: inline-block
+    vertical-align: top
+    @if unitless($font-size)
+        font-size: $font-size + px
+    @else
+        font-size: $font-size
+
+=text-image($img, $width: null, $height: null)
+    width: $width
+    height: $height
+    background: transparent $img no-repeat
+    border: 0
+    overflow: hidden
+    &:before
+        content: ''
+        display: block
+        width: 0
+        height: 150%
+
+=horizontal-center($width: null)
+    width: $width
+    margin-left: auto
+    margin-right: auto
+
+=vertical-center-wrapper
+    font-size: 0
+    letter-spacing: -0.307em
+    &:before
+        vertical-align: middle
+        display: inline-block
+        content: ''
+        width: 0
+        height: 100%
+
+=vertical-center($font-size: $fz-base)
+    vertical-align: middle
+    display: inline-block
+    letter-spacing: normal
+    font-size: $font-size
+
+
+=bg-variant($parent, $color)
+    background-color: $color
+    &:hover,
+    &:focus
+        background-color: shade($color, 10%)
+
+=border-top-radius($radius)
+    border-top-left-radius: $radius
+    border-top-right-radius: $radius
+
+=border-right-radius($radius)
+    border-top-right-radius: $radius
+    border-bottom-right-radius: $radius
+
+=border-bottom-radius($radius)
+    border-bottom-left-radius: $radius
+    border-bottom-right-radius: $radius
+
+=border-left-radius($radius)
+    border-top-left-radius: $radius
+    border-bottom-left-radius: $radius
+
+=button-variant($color, $background, $border: $background)
+    color: $color
+    background-color: $background
+    border-color: $border
+
+    &:focus,
+    &.focus
+        color: $color
+        background-color: shade($background, 10%)
+        border-color: shade($background, 25%)
+    &:hover
+        color: $color
+        background-color: shade($background, 10%)
+        border-color: shade($background, 12%)
+    &:active,
+    &.active
+        color: $color
+        background-color: shade($background, 10%)
+        border-color: shade($background, 12%)
+        &:hover,
+        &:focus,
+        &.focus
+            color: $color
+            background-color: shade($background, 17%)
+            border-color: shade($background, 25%)
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] &
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active
+            background-color: $background
+            border-color: $border
+
+
+=absolute-block
+    content: ''
+    display: block
+    position: absolute
+
+
+
+$caret-helper-variable: (up: (c:bottom, t1:left, t2:right), down: (c:top, t1:left, t2:right), left: (c:right, t1:top, t2:bottom), right: (c:left, t1:top, t2:bottom))
+=caret($direction, $color, $bg-color:null, $width:8px, $border-width:1px, $position: relative, $position-map: (top:0, left:0))
+    @if unitless($width)
+        $width: $width * 1px
+    @if unitless($border-width)
+        $border-width: $border-width * 1px
+
+    position: unquote($position)
+
+    &:before
+        content: ''
+        position: absolute
+        @each $key, $value in $position-map
+            @if unitless($value)
+                #{$key}: $value * 1px
+            @else
+                #{$key}: $value
+
+    $direction-info: map-get($caret-helper-variable, $direction)
+    $c: map-get($direction-info, c)
+    $t1: map-get($direction-info, t1)
+    $t2: map-get($direction-info, t2)
+
+    &:before
+        border-#{$c}: $width solid $color
+        border-#{$t1}: $width solid transparent
+        border-#{$t2}: $width solid transparent
+    @if $bg-color != null and $color != $bg-color and $border-width != null and $border-width < $width
+        &:after
+            content: ''
+            position: absolute
+            @each $key, $value in $position-map
+                @if $c == $key
+                    #{$key}: $value
+                @else
+                    #{$key}: $value + $border-width
+
+            border-#{$c}: ($width - $border-width) solid $bg-color
+            border-#{$t1}: ($width - $border-width) solid transparent
+            border-#{$t2}: ($width - $border-width) solid transparent
+
+
+=triangle-r-b
+    &:after
+        content: ''
+        position: absolute
+
+
+=ghost-hidden
+    position: absolute !important
+    clip: rect(1px 1px 1px 1px)
+    clip: rect(1px, 1px, 1px, 1px)
+    padding: 0 !important
+    border: 0 !important
+    overflow: hidden
+
+    body:hover &
+        a, input, button
+            display: none !important
+
+
+/* for susy */
+=box-sizing($value)
+    box-sizing: $value
+
+=clearfix
+    *zoom: 1
+    &:before,
+    &:after
+        content: " "
+        display: table
+    &:after
+        clear: both
+
+=text-justify
+    text-align: justify
+    &:after
+        display: inline-block
+        content: ''
+        width: 100%
+        height: 0
+
+
+=flow-bar($c: $c-primary, $bgc: null)
+    &.step-1
+        .st-1
+            color: $c
+            background-color: $bgc
+            &:after
+                background-color: $c
+    &.step-2
+        .st-1, .st-2
+            color: $c
+            background-color: $bgc
+            &:after
+                background-color: $c
+        .st-2
+            &:before
+                background-color: $c
+    &.step-3
+        .st-1, .st-2, .st-3
+            color: $c
+            background-color: $bgc
+        .st-1, .st-2, .st-3
+            &:after
+                background-color: $c
+        .st-2, .st-3
+            &:before
+                background-color: $c
+    &.step-last
+        .st-1, .st-2, .st-3, .st-4
+            color: $c
+            background-color: $bgc
+            &:after
+                background-color: $c
+            &:before
+                background-color: $c
+
+=step-bar($ball-width: 40px, $bar-width: 60px)
+    +inline-block-wrapper
+    text-align: center
+    margin-top: 60px
+    margin-bottom: 60px
+    u
+        +inline-block
+        position: relative
+        display: inline-block
+        width: $ball-width
+        height: $ball-width
+        background-color: $c-white-lighter
+        color: $c-black-lighter
+        text-align: center
+        line-height: $ball-width
+        border-radius: 50%
+        margin-left: $bar-width
+        margin-right: $bar-width
+        transition: all .4s
+        &:before
+            +absolute-block
+            right: $ball-width
+            top: ($ball-width - 6px) / 2
+            width: $bar-width
+            height: 6px
+            background-color: $c-white-lighter
+            transition: all .4s
+        &:after
+            +absolute-block
+            left: $ball-width
+            top: ($ball-width - 6px) / 2
+            width: $bar-width
+            height: 6px
+            background-color: $c-white-lighter
+            transition: all .4s
+    .st-first
+        &:before
+            content: none
+    .st-last
+        &:after
+            content: none
+    i
+        color: white
+        font-style: normal
+    span
+        position: absolute
+        width: 100px
+        top: $ball-width
+        left: ($ball-width - 100px) / 2
+
+    +flow-bar($c-primary, $c-primary)
+
+
+=border($direction: bottom, $color: $c-white-lighter, $percent: 100%, $position: relative)
+    position: $position
+    $pseudo: 'after'
+    @if $direction == 'left' or $direction == 'top'
+        $pseudo: 'before'
+    &:#{$pseudo}
+        +absolute-block
+        #{$direction}: -1px
+        background-color: $color
+    @if $direction == 'bottom' or $direction == 'top'
+        &:#{$pseudo}
+            height: 1px
+            width: $percent
+            left: (100% - $percent) / 2
+            transform: scaleY(.5)
+    @else
+        &:#{$pseudo}
+            width: 1px
+            height: $percent
+            top: (100% - $percent) / 2
+            transform: scaleX(.5)
+
+

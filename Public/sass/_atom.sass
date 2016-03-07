@@ -1,0 +1,324 @@
+@import "function"
+@import "mixin"
+@import "variable"
+@import "susy/_susy"
+
+.container, .s-wrap
+    +container($page-width)
+    padding: 0 15px
+
+// 非衬线字体衬线字体与等宽字体, 默认为非衬线
+.san-serif
+    font-family: $font-family-sans-serif
+
+.serif
+    font-family: $font-family-serif
+
+.monospace
+    font-family: $font-family-monospace
+
+// 和可见元素的行为类似, 但不可见
+.ghost-hidden
+    +ghost-hidden
+
+.dn
+    display: none
+
+.invisible
+    visibility: hidden
+
+.clearfix
+    *zoom: 1
+    &:before,
+    &:after
+        content: " "
+        display: table
+    &:after
+        clear: both
+
+.tac
+    text-align: center
+
+.tar
+    text-align: right
+
+.tal
+    text-align: left
+
+.vat
+    vertical-align: top
+
+.vam
+    vertical-align: middle
+
+.vab
+    vertical-align: bottom
+
+.va-b
+    vertical-align: baseline
+
+.db
+    display: block
+
+.dib
+    display: inline-block
+
+.ibw
+    +inline-block-wrapper
+
+.ib
+    +inline-block
+
+.fl
+    float: left
+
+.fr
+    float: right
+
+.m-0
+    margin: 0
+
+.p-0
+    padding: 0
+
+.round
+    border-radius: 4px
+.round-2
+    border-radius: 2px
+
+.cup
+    cursor: pointer
+
+// margin, padding
+@for $i from 0 through 20
+    $px: round(0.1*$i*$i+$i) + px
+    .m-#{$i}
+        margin: $px
+    .mt-#{$i}
+        margin-top: $px
+    .mr-#{$i}
+        margin-right: $px
+    .mb-#{$i}
+        margin-bottom: $px
+    .ml-#{$i}
+        margin-left: $px
+    .p-#{$i}
+        padding: $px
+    .pt-#{$i}
+        padding-top: $px
+    .pr-#{$i}
+        padding-right: $px
+    .pb-#{$i}
+        padding-bottom: $px
+    .pl-#{$i}
+        padding-left: $px
+
+// top, right, bottom, left
+@for $px from -15 through 15
+    .t-#{$px}
+        top: $px + px
+
+@for $px from -15 through 15
+    .r-#{$px}
+        right: $px + px
+
+@for $px from -15 through 15
+    .b-#{$px}
+        bottom: $px + px
+
+@for $px from -15 through 15
+    .l-#{$px}
+        left: $px + px
+
+@for $percent from 1 through 100
+    .w-#{$percent}
+        width: $percent + %
+
+@for $em from 1 through 8
+    .w-#{$em}em
+        width: $em + em
+
+.w-auto
+    width: auto
+
+//@for $rem from 7 through 20
+//    .fzr-#{$rem}
+//        font-size: $rem / 10 + rem
+//@for $em from 7 through 20
+//    .fze-#{$em}
+//        font-size: $em / 10 + em
+
+@for $px from 12 through 30
+    .fz-#{$px}
+        font-size: $px + px
+
+.fz-small
+    font-size: $fz-small
+
+.fz-base
+    font-size: $fz-base
+
+.fz-medium
+    font-size: $fz-medium
+
+.fz-large
+    font-size: $fz-large
+
+.fz-x-large
+    font-size: $fz-x-large
+
+.fz-xx-large
+    font-size: $fz-xx-large
+
+.fz-xxx-large
+    font-size: $fz-xxx-large
+
+.lh-1
+    line-height: 1
+
+@for $h from 10 through 30
+    .lh-#{$h}
+        line-height: ($h / 10) + em
+
+@for $i from 0 through 3
+    $h: $i  * 3
+    .c-#{$h}
+        color: #{'#'}#{$h}#{$h}#{$h}
+
+@each $a in a, b, c, d, e, f
+    .c-#{$a}
+        color: #{'#'}#{$a}#{$a}#{$a}
+
+.c-primary
+    color: $c-primary
+    &:visited
+        color: $c-primary
+
+.c-alt
+    color: $c-alt
+    &:visited
+        color: $c-alt
+
+.c-success
+    color: $c-success
+    &:visited
+        color: $c-success
+
+.c-info
+    color: $c-info
+    &:visited
+        color: $c-info
+
+.c-warning
+    color: $c-warning
+    &:visited
+        color: $c-warning
+
+.c-danger
+    color: $c-danger
+    &:visited
+        color: $c-danger
+
+.bg-primary
+    background-color: $c-primary-lighter
+
+.bg-alt
+    background-color: $c-alt-lighter
+
+.bg-success
+    background-color: $c-success-lighter
+
+.bg-info
+    background-color: $c-info-lighter
+
+.bg-warning
+    background-color: $c-warning-lighter
+
+.bg-danger
+    background-color: $c-danger-lighter
+
+.bgc-w
+    background-color: #fff
+
+.bgc-primary
+    background-color: $c-primary
+
+.bgc-transparent
+    background-color: transparent
+
+@each $size, $px in (small 6), (medium 8), (large 10)
+    .dot-#{$size}
+        width: #{$px}px
+        height: #{$px}px
+        border-radius: #{$px / 2}px
+
+@for $i from 1 through 16
+    $em: $i / 2
+    .circle-#{$i}
+        width: #{$em}em
+        height: #{$em}em
+        border-radius: #{$em / 2}em
+
+
+.fwb
+    font-weight: bold
+.fwn
+    font-weight: normal
+.tdu
+    text-decoration: underline
+.por
+    position: relative
+
+.poa
+    position: absolute
+
+.zi--1
+    z-index: -1
+
+.ovh
+    overflow: hidden
+
+.r1
+    position: absolute
+    top: 0
+    right: 1em
+
+
+.bdn
+    border: none
+
+.cc
+    border-radius: 50%
+    overflow: hidden
+
+.hc
+    +horizontal-center
+
+.vc-w
+    +vertical-center-wrapper
+
+.vc
+    +vertical-center
+
+@for $n from 1 through 15
+    .sp-#{$n}
+        +span($n)
+
+.sp-last
+    +span(last)
+
+.ellipsis
+    text-overflow: ellipsis
+    word-wrap: normal
+
+.nowrap
+    white-space: nowrap
+
+.transition
+    transition: all .4s
+.ti-2
+    text-indent: 2em
+
+
+
+

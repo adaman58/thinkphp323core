@@ -6,25 +6,70 @@ use Think\Controller;
 class IndexController extends Controller
 {
 
-
-    const APPID = 'wx2359f58110dc66e0';
-    const SECRET = '7e83638026e46aec964dd3f9af8a3f06';
-
-    public function Mrj()
+    private function getAuthUrl()
     {
-        $redirect_uri = urlencode('http://wx.dreammove.cn/wx/mm');
-        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . self::APPID . '&redirect_uri=' . $redirect_uri . '&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect';
-        redirect($url);
+        $redirect_uri = urlencode('http://wx.dreammove.cn/index/mrj.html');
+        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . C('MP')['APP_ID'] . '&redirect_uri=' . $redirect_uri . '&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect';
+        return $url;
     }
 
-    public function mm()
+    private function redirectAuth()
+    {
+        redirect($this->getAuthUrl());
+    }
+
+    public function mrj()
     {
         $code = $_GET['code'];
-        $getTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . self::APPID . '&secret=' . self::SECRET . '&code=' . $code . '&grant_type=authorization_code';
-        $info = curlGet($getTokenUrl);
-        $data = json_decode($info);
-        print_r($info);
-        //$url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $access_token . '&openid=OPENID&lang=zh_CN';
+        $MP = C('MP');
+        if ($_GET['code']) {
+            $getTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $MP['APP_ID'] . '&secret=' . $MP['APP_SECRET'] . '&code=' . $code . '&grant_type=authorization_code';
+            $accessTokenData = curlGet($getTokenUrl);
+            $accessTokenInfo = (Array)json_decode($accessTokenData['receive_info']);
+
+            $accessToken = $accessTokenInfo['access_token'];
+            $openid = $accessTokenInfo['openid'];
+            $unionid = $accessTokenInfo['unionid'];
+
+            $getUserInfourl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $accessToken . '&openid=' . $openid . '&lang=zh_CN';
+            $userInfoData = curlGet($getUserInfourl);
+            $userInfo = (Array)json_decode($userInfoData['receive_info']);
+            if ($userInfo['errcode']) {
+                $this->redirectAuth();
+            }
+            print_r($userInfo['errcode']);
+
+
+            $this->user_info = $userInfo;
+            $this->appid = $MP['APP_ID'];
+            $this->cache_signature();
+            $this->display();
+        } else {
+            $this->redirectAuth();
+        }
+    }
+
+    public function mrj_index()
+    {
+        $floor = 18.5;
+        $ceil = 23;
+        $bmi = I('bmi');
+        if (empty($bmi)) {
+            $this->redirectAuth();
+        } else {
+            if ($bmi >= $ceil) {
+                $weight_text = 'fat';
+            } else if ($bmi <= $floor) {
+                $weight_text = 'thin';
+            } else {
+                $weight_text = 'normal';
+            }
+            $this->weight_text = $weight_text;
+            $this->bmi = number_format($bmi, 2);
+            $this->authUrl = $this->getAuthUrl();
+            $this->display();
+        }
+
     }
 
     private function random_str($length)
@@ -38,7 +83,6 @@ class IndexController extends Controller
             $rand = mt_rand(0, $arr_len - 1);
             $str .= $arr[$rand];
         }
-
         return $str;
     }
 
@@ -73,17 +117,8 @@ class IndexController extends Controller
 
     public function index()
     {
-    	print_r(getToken());exit();
+        print_r(getToken());
         $this->cache_signature();
         $this->display();
     }
-
-    public function Index2()
-    {
-    	echo "--!!!!!";exit();
-        $this->display('index');
-    }
-
-
-
 }

@@ -1,0 +1,664 @@
+@import "bourbon/_bourbon"
+@import "variable"
+
+
+$body-background-alternative: #F7F8FA
+
+html
+    color: $text-color
+    font-size: 16px
+    line-height: $line-height-base
+    box-sizing: border-box
+
+body
+    font-family: $font-family-base
+    font-size: $fz-base
+    word-break: break-all
+    word-wrap: break-word
+
+    &.bg
+        background: $body-background-alternative
+
+var
+    font-style: normal
+
+*, *:before, *:after
+    box-sizing: inherit
+
+\::-moz-selection
+    background: #b3d4fc
+    text-shadow: none
+
+\::selection
+    background: #b3d4fc
+    text-shadow: none
+
+h1, h2, h3, h4, h5, h6
+    font-weight: normal
+
+a
+    color: inherit
+    &:visited
+        color: inherit
+    &:hover
+        color: $c-primary
+    &:active
+        color: $c-primary-dark
+    &.full
+        display: inline-block
+        width: 100%
+        height: 100%
+
+u
+    text-decoration: none
+
+hr
+    display: block
+    height: 1px
+    border: 0
+    border-top: 1px solid #ccc
+    margin: 1em 0
+
+audio, canvas, iframe, img, svg, video
+    vertical-align: middle
+
+fieldset
+    border: 0
+    margin: 0
+    padding: 0
+
+input
+    line-height: inherit
+
+label
+    cursor: pointer
+
+textarea
+    resize: vertical
+
+ul
+    margin: 0
+    padding: 0
+    list-style-type: none
+
+a
+    text-decoration: none
+
+img
+    max-width: 100%
+
+
+.article
+    u
+        text-decoration: underline
+    b
+        font-weight: bold
+
+
+.browser-upgrade
+    background: $c-black-light
+    color: white
+    width: 960px
+    line-height: 42px
+    position: absolute
+    left: 50%
+    margin-left: -480px
+    z-index: 9999
+    text-align: center
+    bottom: auto
+    a
+        color: white
+    .browser-download
+        color: white
+        text-decoration: underline
+        background: url('../img/chrome.png') 5px 0 no-repeat
+        padding-left: 25px
+        &.ie
+            background-image: url('../img/ie.png')
+    .link-btn-close
+        position: absolute
+        right: 15px
+        top: 0
+
+%btn
+    display: inline-block
+    padding: .4em .8em
+    font-weight: 400
+    text-align: center
+    white-space: nowrap
+    vertical-align: middle
+    touch-action: manipulation
+    cursor: pointer
+    border: 1px solid transparent
+    background: transparent
+    border-radius: 4px
+    transition: all .4s
+    user-select: none
+    &:hover, &:focus
+        outline: none
+    &:active
+        outline: none
+    &[disabled]
+        cursor: default
+    &.error
+        border-color: $c-danger
+        &:focus
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px color(danger, normal, .6)
+
+button, .btn
+    @extend %btn
+
+/* 三种样式
+/* .btn-o .btn-link .btn-primary
+
+@each $c in primary, danger, success, warning
+    .btn-#{$c}
+        color: white
+        background-color: color($c)
+        border-color: color($c)
+        &:visited
+            color: white
+        &:hover, &:focus
+            color: white
+            background-color: color($c, dark)
+            border-color: color($c, dark)
+        &:active
+            color: white
+            background-color: color($c, darker)
+            border-color: color($c, darker)
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+        &[disabled]
+            color: $c-white-dark
+            background-color: $c-white-smoke
+            border-color: $c-white
+
+.btn-athens
+    color: $c-black-lighter
+    background-color: $c-white-athens
+    border-color: transparent
+    &:hover, &:focus
+        color: $c-black-light
+        background-color: scale_color($c-white-athens, $lightness: -10%)
+    &:active
+        color: $c-black
+        background-color: scale_color($c-white-athens, $lightness: -20%)
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+
+.btn-o
+    color: $c-black-dark
+    background-color: white
+    border-color: $c-white
+    &:hover, &:focus
+        background-color: $c-white-smoke
+        border-color: $c-white
+    &:active
+        background-color: $c-white-lighter
+        border-color: $c-white-dark
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+    @each $c in primary, danger
+        &.c-#{$c}
+            color: color(#{$c})
+            border-color: color(#{$c}, light)
+            &:hover, &:focus
+                background-color: scale_color(color(#{$c}), $lightness: 95%)
+            &:active
+                background-color: scale_color(color(#{$c}), $lightness: 90%)
+                box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+
+.btn-link
+    &:hover, &:focus
+        color: $c-primary-dark
+    &:active
+        color: $c-primary-darker
+    @each $c in primary, danger
+        &.c-#{$c}
+            color: color(#{$c})
+            &:hover, &:focus
+                color: color(#{$c}, dark)
+            &:active
+                color: color(#{$c}, darker)
+
+.btn[disabled], fieldset[disabled] .btn
+    color: $c-black
+    background-color: #fff
+    border-color: #ccc
+    pointer-events: none
+    cursor: not-allowed
+    box-shadow: none
+    opacity: .65
+
+.btn-large
+    font-size: $fz-large
+    padding: .5em 2.5em
+
+.btn-square
+    border-radius: 0
+
+
+%input
+    width: 100%
+    padding: .6em .8em
+    font-size: inherit
+    border: 1px solid #ccc
+    border-radius: 4px
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    &:focus
+        border-color: $c-primary-light
+        outline: 0
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px color(info, normal, .6)
+    &.error
+        border-color: $c-danger
+        &:focus
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px color(danger, normal, .6)
+    &.success
+        border-color: $c-success
+    &.ghost
+        background-color: transparent
+        border-color: transparent
+        box-shadow: none
+        &.error
+            border-color: $c-danger
+        &[disabled]
+            background-color: transparent
+
+    &[disabled]
+        background-color: $c-white-smoke
+
+input[type="text"], input[type="password"],
+input[type="email"], input[type="tel"], input[type="url"], input[type="number"], input[type="search"],
+textarea,
+.dm-select
+    @extend %input
+.dm-select
+    background-color: #fff
+    cursor: pointer
+.error ~ .dm-select
+    border-color: $c-danger
+
+textarea
+    line-height: $line-height-base
+
+.ctrl-wrap
+    position: relative
+    &[data-suffix]
+        position: relative
+        &:after
+            content: attr(data-suffix)
+            position: absolute
+            right: 0
+            top: 0
+            padding: .6em .8em
+            color: $c-white
+        input
+            padding-right: 3em
+    &[data-prefix]
+        position: relative
+        &:before
+            content: attr(data-prefix)
+            position: absolute
+            left: 0
+            top: 0
+            padding: .6em .8em
+            color: $c-white
+        input
+            padding-left: 1.8em
+
+.ctrl-ghost
+    input[type=radio], input[type=checkbox]
+        position: absolute
+        z-index: -1
+        opacity: 0
+
+input.ghost-hidden
+    +ghost-hidden
+
+input[type="number"], input[type="tel"]
+    font-family: $font-family-monospace
+    letter-spacing: 2px
+
+.input-prefix, .input-suffix
+    input[type="number"]
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button
+            -webkit-appearance: none !important
+            margin: 0
+
+
+.ctrl-wrap[data-prefix]
+    position: relative
+    &:before
+        content: attr(data-prefix)
+        position: absolute
+        left: 0
+        top: 0
+        padding: .6em .8em
+    input
+        padding-left: 1.8em
+
+.ctrl-wrap[data-suffix]
+    position: relative
+    &:after
+        content: attr(data-suffix)
+        position: absolute
+        right: 0
+        top: 0
+        padding: .6em .8em
+    input
+        padding-right: 3em
+
+.close
+    float: right
+    font-size: 21px
+    font-weight: 700
+    line-height: 1
+    color: #000
+    text-shadow: 0 1px 0
+    opacity: .2
+    cursor: pointer
+    padding: 0 3px
+    margin-top: -2px
+    &:hover
+        opacity: .5
+
+.caret-up
+    +caret(up, shade(#C7C7C7, 90%), #fbfbfb, 8px, 1px, absolute, (top: -8px, left: 7px))
+
+.caret-down
+    +caret(down, shade(#C7C7C7, 90%), #fbfbfb, 8px, 1px, absolute, (bottom: -8px, left: 7px))
+
+.caret-left
+    +caret(left, shade(#c7c7c7, 90%), #fbfbfb, 8px, 1px, absolute, (top: 7px, left: -8px))
+
+.caret-right
+    +caret(right, shade(#c7c7c7, 90%), #fbfbfb, 8px, 1px, absolute, (top: 7px, right: -8px))
+
+@keyframes bubble
+    0%
+        opacity: 0
+        transform: scale(.8)
+    100%
+        opacity: 1
+        transform: scale(1)
+
+.bubble
+    font-size: 14px
+    background: #FBFBFB
+    border: 1px solid #C7C7C7
+    border-bottom-color: #A4A4A4
+    border-radius: 3px
+    box-shadow: 0 2px 2px -1px #A4A4A4
+    max-width: 450px
+    padding: .5em
+    z-index: 999
+    animation: bubble .2s
+    white-space: nowrap
+
+.bubble-wrap
+    position: relative
+
+.word-count
+    position: absolute
+    right: 8px
+    bottom: 10px
+    color: $c-white-dark
+
+input ~ .word-count
+    top: 50%
+    margin-top: -10px
+
+.line-header
+    border-bottom: 1px solid $c-white
+    padding-left: 1em
+    line-height: 2.2
+    position: relative
+    &:before
+        content: ''
+        display: inline-block
+        vertical-align: top
+        width: 4px
+        height: 1em
+        background: $c-primary-pure
+        position: absolute
+        left: 0
+        top: 50%
+        margin-top: -0.5em
+
+.note
+    padding: 1em
+    border-radius: 4px
+    &.note-warning
+        color: $c-black
+        background-color: $c-warning-lighter
+        border: 1px solid $c-warning-light
+    &.note-danger
+        color: $c-danger
+        background-color: $c-warning-lighter
+        border: 1px solid $c-warning-light
+    &.note-info
+        color: $c-info
+        background-color: $c-info-lighter
+        border: 1px solid $c-info-light
+    &.note-success
+        color: $c-success
+        background-color: change_color($c-success, $lightness: 94%)
+        border: 1px solid $c-success-lighter
+
+.divider
+    position: relative
+    text-align: center
+    &:after
+        +absolute-block
+        width: 100%
+        height: 1px
+        background: $c-white-lighter
+        top: 50%
+        left: 0
+    .title
+        background: white
+        padding: 0 10px
+        position: relative
+        z-index: 2
+
+.city-select
+    .dropdown-content
+        position: absolute
+        width: 100%
+        z-index: 9
+    .tab-title
+        +inline-block-wrapper(nowrap)
+        background-color: white
+        li
+            +inline-block($fz-base)
+            text-align: center
+            background: $c-white-smoke
+            border: 1px solid $c-white-light
+            border-left: none
+            width: 50%
+            line-height: 40px
+            cursor: pointer
+            &:first-child
+                border-left: 1px solid $c-white-light
+            &.active
+                background: white
+                border-bottom: none
+
+    .tab-content
+        +inline-block-wrapper
+        border: 1px solid $c-white-light
+        border-top: none
+        background-color: white
+        li
+            +inline-block($fz-base)
+            background: white
+            padding: 1em
+        u
+            display: inline-block
+            text-decoration: none
+            padding: 4px 12px
+            margin: 5px
+            border-radius: 3px
+            cursor: pointer
+            &:hover
+                color: $c-primary-darker
+                background: scale_color($c-primary-lighter, $lightness: 50%)
+            &.checked
+                color: white
+                background: $c-primary
+
+.status-off
+    .on
+        display: none
+
+.status-on
+    color: $c-primary
+    .off
+        display: none
+
+.page-list, .pager
+    text-align: center
+    .btn
+        width: auto
+        margin: 0 2px
+        background-color: #fff
+        border: 1px solid $c-white-lighter
+    .disabled
+        color: $c-white-dark
+        cursor: default
+        &:hover
+            color: $c-white-dark
+    .active
+        color: white
+        background-color: $c-primary
+        border-color: transparent
+        cursor: default
+        &:hover
+            color: white
+
+.panel
+    background-color: white
+    padding: 15px
+    margin-bottom: 20px
+    border: 1px solid $c-white-lighter
+
+.section-header
+    font-size: $fz-medium
+    color: $c-primary
+    padding-left: 1em
+    position: relative
+    line-height: 2
+    &:before
+        +absolute-block
+        width: 5px
+        height: 1em
+        border-radius: 3px
+        left: 0
+        top: .5em
+        background-color: $c-primary
+
+
+.percent-circle
+    $w: 96px
+    position: relative
+    width: $w
+    height: $w
+    text-align: center
+    margin: 0 auto
+    color: $c-primary
+    .text
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        line-height: $w
+        font-size: 20px
+
+.fly-hint
+    position: absolute
+
+.check-triangle
+    input[type=radio], input[type=checkbox]
+        position: absolute
+        opacity: 0
+        z-index: -1
+        &:checked + label
+            color: $c-primary
+            border-color: $c-primary
+            .icon-check-triangle
+                color: $c-primary
+    label
+        position: relative
+        display: inline-block
+        padding: .3em .8em
+        border: 1px solid $c-white
+        user-select: none
+    .icon-check-triangle
+        color: $c-white
+
+
+.tooltip
+    position: relative
+    &:hover
+        .tooltip-content
+            transition-duration: .4s
+            opacity: 1
+            visibility: visible
+            transform: translateX(0)
+.tooltip-content
+    $bgc: change_color($c-primary, $lightness: 50%)
+    $borderColor: change_color($c-primary, $lightness: 50%)
+    opacity: 0
+    visibility: hidden
+    transform: translateX(20px)
+    transition: all .2s
+    +caret(right, $borderColor, $bgc, 8px, 1, absolute, (right: -8px, top: 11px))
+    position: absolute
+    z-index: 9
+    padding: 10px
+    border-radius: 4px
+    border: 1px solid $borderColor
+    color: white
+    background-color: $bgc
+
+.tooltip-down
+    $bgc: change_color($c-primary, $lightness: 50%)
+    $borderColor: change_color($c-primary, $lightness: 50%)
+    &:hover
+        .tooltip-content
+            transform: translateY(0)
+    .tooltip-content
+        transform: translateY(20px)
+        +caret(up, $borderColor, $bgc, 8px, 1, absolute, (top: -8px, left: 11px))
+        &:before
+            left: 50%
+            margin-left: -8px
+            right: auto
+
+
+.tooltip-medium
+    min-width: 400px
+.tooltip-large
+    min-width: 600px
+
+.bb
+    border-bottom: 1px solid $c-white-lighter
+.bt
+    border-top: 1px solid $c-white-lighter
+.bl
+    border-left: 1px solid $c-white-lighter
+.br
+    border-right: 1px solid $c-white-lighter
+
+.table-athene
+    background-color: #FBFCFF
+    td
+        border: 1px solid #E5F4FB
+
+.laydate_box
+    box-sizing: content-box
+.laydate-icon
+    height: auto !important
+    line-height: 1 !important
+
+.back-substation
+    visibility: hidden
