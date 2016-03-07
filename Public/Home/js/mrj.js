@@ -61,6 +61,9 @@ $(function () {
                 if (index + 1 >= viewCount) return;
                 $views.removeClass('in')
                 $active = $views.eq(index + 1).addClass('in')
+                if (index === 1) {
+                    checkWidth()
+                }
             }, prev: function () {
                 var index = $active.index($views)
                 if (index <= 0) return;
