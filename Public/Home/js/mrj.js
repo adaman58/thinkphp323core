@@ -11,21 +11,21 @@ $(function () {
             shareObj = {
                 title: userInfo.nickname + '的测试结果：瘦得太可怜惹，跪求土豪胖子来包养！',
                 desc: userInfo.nickname + '的测试结果：瘦得太可怜惹，跪求土豪胖子来包养！',
-                link: 'http://wx.dreammove.cn/index/mrj_index.html?nickname=' + userInfo.nickname + '&bmi=' + bmi,
+                link: 'http://wx.dreammove.cn/mrj/index.html?nickname=' + userInfo.nickname + '&bmi=' + bmi,
                 imgUrl: 'http://wx.dreammove.cn/Public/Home/img/mrj/icon-share-' + bmi_text + '.jpg'
             }
         } else if (bmi_text === 'normal') {
             shareObj = {
                 title: userInfo.nickname + '的测试结果：身材标准，我的美让我错过了卖肉赚钱的好机会！',
                 desc: userInfo.nickname + '的测试结果：身材标准，我的美让我错过了卖肉赚钱的好机会！',
-                link: 'http://wx.dreammove.cn/index/mrj_index.html?nickname=' + userInfo.nickname + '&bmi=' + bmi,
+                link: 'http://wx.dreammove.cn/mrj/index.html?nickname=' + userInfo.nickname + '&bmi=' + bmi,
                 imgUrl: 'http://wx.dreammove.cn/Public/Home/img/mrj/icon-share-' + bmi_text + '.jpg'
             }
         } else if (bmi_text === 'fat') {
             shareObj = {
                 title: userInfo.nickname + '的测试结果：身价' + value + ' 在用肉换钱的路上我胖着就把钱给挣了！',
                 desc: userInfo.nickname + '的测试结果：身价' + value + ' 在用肉换钱的路上我胖着就把钱给挣了！',
-                link: 'http://wx.dreammove.cn/index/mrj_index.html?nickname=' + userInfo.nickname + '&bmi=' + bmi + '&fv=' + value,
+                link: 'http://wx.dreammove.cn/mrj/index.html?nickname=' + userInfo.nickname + '&bmi=' + bmi + '&fv=' + value,
                 imgUrl: 'http://wx.dreammove.cn/Public/Home/img/mrj/icon-share-' + bmi_text + '.jpg'
             }
         } else {

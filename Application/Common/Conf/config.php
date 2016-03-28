@@ -12,23 +12,4 @@ return array(
     'VAR_URL_PARAMS' => '', // PATHINFO URL参数变量
     'URL_PATHINFO_DEPR' => '/', //PATHINFO URL分割符
 
-    'MP' => array(
-        'APP_ID' => 'wx2359f58110dc66e0',
-        'APP_SECRET' => '7e83638026e46aec964dd3f9af8a3f06',
-        'GRANT_TYPE' => 'client_credential'),
-
-    /* API域名 */
-    'WEIXIN_DOMAIN_URL' => 'https://api.weixin.qq.com/cgi-bin',
-    /* API路径 */
-    'WEIXIN_API' => array(
-        'GETTOKEN' => '/token',                                //获取token
-        'GETJSAPI' => '/ticket/getticket',                    //获取jsapi
-
-    ),
-    /* 模板相关配置 */
-    'TMPL_PARSE_STRING' => array(
-        '__JS__' => __ROOT__ . '/Public/js',
-        '__CSS__' => __ROOT__ . '/Public/css',
-        '__IMG__' => __ROOT__ . '/Public/img',
-    ),
 );

@@ -1,0 +1,324 @@
+@import "../../sass/bourbon/bourbon"
+@import "../../sass/susy/susy"
+@import "../../sass/animate/animate"
+
+@import "../../sass/mixin"
+@import "../../sass/variable"
+
+@import "../../sass/modals"
+
+$breakpoints: (tiny: 360px, small: 480px, medium: 768px, large: 1024px)
+
+$draft_width: 750
+$draft_height: 1334
+
+@function rem($px)
+    @return $px / $draft_width * 20rem
+
+@function x($x)
+    @return $x / $draft_width * 100%
+
+@function y($y)
+    @return $y / $draft_height * 100%
+
+@mixin abs_img($width, $height)
+    position: absolute
+    background-size: contain
+    background-position: center
+    background-repeat: no-repeat
+    width: rem($width)
+    height: rem($height)
+
+@mixin abs_pos($left, $top)
+    position: absolute
+    background-size: contain
+    background-position: center
+    top: y($top)
+    left: x($left)
+
+@mixin abs_ghost($width, $height)
+    display: block
+    font-size: 0
+    opacity: 0
+    width: x($width)
+    height: y($height)
+
++font-face('arc', '../../static/font/arc')
+
+html
+    box-sizing: border-box
+
+body
+    font-family: 'arc', $font-family-sans-serif
+
+*, *:before, *:after
+    box-sizing: inherit
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+    -webkit-appearance: none
+    margin: 0
+
+.view-win
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+
+.view
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    visibility: hidden
+    opacity: 0
+    transition: all .5s
+    overflow: hidden
+    &.in
+        visibility: visible
+        opacity: 1
+
+@keyframes loading
+    0%, 18%, 41%, 68%
+        transform: translate(-100%)
+    17.5%
+        transform: translate(-75%)
+    40%
+        transform: translate(-50%)
+    67.5%
+        transform: translate(-25%)
+    100%
+        transform: translate(0)
+
+.view-loading
+    background: #FFE309
+    &.in
+        .loading-train
+            animation: loading 1s infinite
+    .loading-text
+        background: url("../img/neta/loading-text.png") no-repeat center
+        +abs_img(382, 58)
+        left: x(180)
+        top: y(560)
+    .loading-progress
+        position: absolute
+        width: 14.6rem
+        height: 1.6rem
+        background: white
+        border-radius: .8rem
+        top: y(640)
+        left: 3rem
+        overflow: hidden
+        border: 3px solid white
+        .border-blue
+            width: 100%
+            height: 100%
+            border: 4px solid #3343FB
+            border-radius: 12px
+        .border-white
+            width: 100%
+            height: 100%
+            border: 4px solid white
+            border-radius: 8px
+            overflow: hidden
+    .loading-train
+        position: relative
+        width: 100%
+        height: 100%
+        border-radius: 10px
+        top: 0
+        background: #3343FB
+        transform: translate(-50%)
+
+@keyframes a-1
+    from, 60%, 75%, 90%, to
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
+    from
+        opacity: 0
+        transform: translate3d(3000px, 0, 0)
+    60%
+        opacity: 1
+        transform: translate3d(-25px, 0, 0)
+    75%
+        transform: translate3d(10px, 0, 0)
+    90%
+        transform: translate3d(-5px, 0, 0)
+    to
+        transform: none
+
+@keyframes a-2
+    from, 60%, 75%, 90%, to
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
+    0%
+        opacity: 0
+        transform: translate3d(-3000px, 600px, 0)
+    60%
+        opacity: 1
+        transform: translate3d(25px, -5px, 0)
+    75%
+        transform: translate3d(-10px, 2px, 0)
+    90%
+        transform: translate3d(5px, -1px, 0)
+    to
+        transform: none
+
+@keyframes a-3
+    from, 60%, 75%, 90%, to
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
+    from
+        opacity: 0
+        transform: translate3d(3000px, -1000px, 0)
+    60%
+        opacity: 1
+        transform: translate3d(-24px, 8px, 0)
+    75%
+        transform: translate3d(12px, -4px, 0)
+    90%
+        transform: translate3d(-6px, 2px, 0)
+    to
+        transform: none
+
+.view-index
+    background: url("../img/neta/bg-a.jpg") no-repeat center
+    background-size: 100% 100%
+    $duration: .8s
+    $delay: $duration * .6
+    &.in
+        .a-1
+            animation: a-1 $duration
+        .a-2
+            animation: a-2 $duration $delay * 2 both
+        .a-3
+            animation: a-3 $duration $delay both
+    .a-1
+        background-image: url(../img/neta/a-1.png)
+        +abs_img(750, 368)
+        top: 0
+        left: 0
+    .a-2
+        background-image: url(../img/neta/a-2.png)
+        +abs_img(750, 274)
+        bottom: y(170)
+    .a-3
+        background-image: url(../img/neta/a-3.png)
+        +abs_img(490, 730)
+        left: x(173)
+        top: y(265)
+    .a-blink
+        background-image: url(../img/neta/a-blink.gif)
+        +abs_img(183, 191)
+        right: x(30)
+        bottom: y(10)
+    .a-calc
+        +abs_ghost(206, 206)
+        position: absolute
+        right: 0
+        bottom: 0
+
+@keyframes rise
+    from, 60%, 75%, 90%, to
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
+    from
+        opacity: 0
+        transform: translate3d(0, 3000px, 0)
+    60%
+        opacity: 1
+        transform: translate3d(0, -20px, 0)
+    75%
+        transform: translate3d(0, 10px, 0)
+    90%
+        transform: translate3d(0, -5px, 0)
+    to
+        transform: translate3d(0, 0, 0)
+
+.view-sex, .view-age
+    background: url("../img/neta/bg-b.jpg") no-repeat center
+    background-size: 100% 100%
+    $duration: .7s
+    $delay: $duration * .6
+    &.in
+        .a, .b, .c
+            &.rise
+                animation: rise $duration both
+        .b.rise
+            animation-delay: $delay
+        .c.rise
+            animation-delay: $delay * 2
+    .circle
+        background-image: url(../img/neta/circle.gif)
+        +abs_img(612, 580)
+        top: y(208)
+        left: x(88)
+    @each $alpha in a, b, c
+        .#{$alpha}
+            background-image: url(../img/neta/b-#{$alpha}.png)
+            +abs_img(445, 115)
+            left: x(175)
+    .a
+        top: y(815)
+    .b
+        top: y(950)
+    .c
+        top: y(1082)
+    .next
+        background-image: url(../img/neta/next.png)
+        +abs_img(77, 81)
+        right: x(50)
+        bottom: y(25)
+
+.view-age
+    background-image: url(../img/neta/bg-c.jpg)
+    @each $alpha in a, b, c
+        .#{$alpha}
+            background-image: url(../img/neta/c-#{$alpha}.png)
+            +abs_img(493, 115)
+            left: x(128)
+
+.view-result
+    background: no-repeat center
+    background-size: 100% 100%
+    @each $alpha in a, b, c
+        @for $i from 1 through 6
+            &.#{$alpha}-#{$i}
+                background-image: url(../img/neta/result/#{$alpha}-#{$i}.jpg)
+    &.in
+        .icon-share
+            animation: blink 3s 1s infinite
+        .link
+            animation: rise .8s
+    .icon-share
+        background-image: url(../img/neta/icon-share.png)
+        +abs_img(59, 84)
+        top: y(16)
+        right: x(35)
+    .link
+        background-image: url(../img/neta/link-project.png)
+        +abs_img(556, 216)
+        left: x(100)
+        bottom: y(86)
+
+.option
+    &.active
+        filter: hue-rotate(100deg)
+
+@keyframes shake
+    from, to
+        transform: translate3d(0, 0, 0)
+    10%, 30%, 50%, 70%, 90%
+        transform: translate3d(-10px, 0, 0)
+    20%, 40%, 60%, 80%
+        transform: translate3d(10px, 0, 0)
+
+.shake
+    animation: shake 1s !important
+
+@keyframes blink
+    0%, 10%, 20%, 100%
+        opacity: 1
+    5%, 15%
+        opacity: 0
+
+.blink
+    animation: blink 3s infinite

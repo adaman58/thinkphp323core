@@ -1,0 +1,34 @@
+<?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class NetaController extends Controller
+{
+
+    private function redirectAuth()
+    {
+        redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/neta/index.html')));
+    }
+
+    public function index()
+    {
+        $MP = C('MP');
+        if ($_GET['code']) {
+            $userInfo = get_weixin_user_info();
+
+            if ($userInfo['errcode']) {
+                $this->redirectAuth();
+            }
+
+            $this->user_info = $userInfo;
+            $this->appid = $MP['APP_ID'];
+            $cached_signature = cache_signature();
+            $this->assign($cached_signature);
+            $this->display();
+        } else {
+            $this->redirectAuth();
+        }
+
+    }
+}

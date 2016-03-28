@@ -10,7 +10,7 @@ $breakpoints: (tiny: 360px, small: 480px, medium: 768px, large: 1024px)
 @function rem($px)
     @return $px / 1080 * 20rem
 
-+font-face('arc', '../../Static/font/arc')
++font-face('arc', '../../static/font/arc')
 
 html
     box-sizing: border-box
@@ -120,9 +120,9 @@ input[type=number]::-webkit-outer-spin-button
     .nickname
         position: absolute
         right: x(460)
-        top: y(24)
-        font-size: 2rem
-        line-height: 2rem
+        top: y(25)
+        font-size: 1.7rem
+        line-height: 1.7rem
         text-align: right
         +ellipsis(35%)
     .bmi

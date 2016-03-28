@@ -5,120 +5,15 @@ use Think\Controller;
 
 class IndexController extends Controller
 {
-
-    private function getAuthUrl()
-    {
-        $redirect_uri = urlencode('http://wx.dreammove.cn/index/mrj.html');
-        $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . C('MP')['APP_ID'] . '&redirect_uri=' . $redirect_uri . '&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect';
-        return $url;
-    }
-
-    private function redirectAuth()
-    {
-        redirect($this->getAuthUrl());
-    }
-
+    // 兼容历史网址
     public function mrj()
     {
-        $code = $_GET['code'];
-        $MP = C('MP');
-        if ($_GET['code']) {
-            $getTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . $MP['APP_ID'] . '&secret=' . $MP['APP_SECRET'] . '&code=' . $code . '&grant_type=authorization_code';
-            $accessTokenData = curlGet($getTokenUrl);
-            $accessTokenInfo = (Array)json_decode($accessTokenData['receive_info']);
-
-            $accessToken = $accessTokenInfo['access_token'];
-            $openid = $accessTokenInfo['openid'];
-            $unionid = $accessTokenInfo['unionid'];
-
-            $getUserInfourl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $accessToken . '&openid=' . $openid . '&lang=zh_CN';
-            $userInfoData = curlGet($getUserInfourl);
-            $userInfo = (Array)json_decode($userInfoData['receive_info']);
-            if ($userInfo['errcode']) {
-                $this->redirectAuth();
-            }
-            print_r($userInfo['errcode']);
-
-
-            $this->user_info = $userInfo;
-            $this->appid = $MP['APP_ID'];
-            $this->cache_signature();
-            $this->display();
-        } else {
-            $this->redirectAuth();
-        }
+        $this->redirect('mrj/mrj');
     }
-
+    
+    // 兼容历史网址
     public function mrj_index()
     {
-        $floor = 18.5;
-        $ceil = 23;
-        $bmi = I('bmi');
-        if (empty($bmi)) {
-            $this->redirectAuth();
-        } else {
-            if ($bmi >= $ceil) {
-                $weight_text = 'fat';
-            } else if ($bmi <= $floor) {
-                $weight_text = 'thin';
-            } else {
-                $weight_text = 'normal';
-            }
-            $this->weight_text = $weight_text;
-            $this->bmi = number_format($bmi, 2);
-            $this->authUrl = $this->getAuthUrl();
-            $this->display();
-        }
-
-    }
-
-    private function random_str($length)
-    {
-        //生成一个包含 大写英文字母, 小写英文字母, 数字 的数组
-        $arr = array_merge(range(0, 9), range('a', 'z'), range('A', 'Z'));
-
-        $str = '';
-        $arr_len = count($arr);
-        for ($i = 0; $i < $length; $i++) {
-            $rand = mt_rand(0, $arr_len - 1);
-            $str .= $arr[$rand];
-        }
-        return $str;
-    }
-
-    //php获取当前访问的完整url地址
-    private function get_cur_url()
-    {
-        $url = 'http://';
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-            $url = 'https://';
-        }
-        if ($_SERVER['SERVER_PORT'] != '80') {
-            $url .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
-        } else {
-            $url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-        }
-        return $url;
-    }
-
-    private function cache_signature()
-    {
-        $noncestr = $this->random_str(16);
-        $time = time();
-        $url = $this->get_cur_url();
-        $jsapi_ticket = getJsapiTicket();
-        $string = 'jsapi_ticket=' . $jsapi_ticket . '&noncestr=' . $noncestr . '&timestamp=' . $time . '&url=' . $url;
-        $signature = sha1($string);
-
-        $this->assign('nonce_str', $noncestr);
-        $this->assign('timestamp', $time);
-        $this->assign('signature', $signature);
-    }
-
-    public function index()
-    {
-        print_r(getToken());
-        $this->cache_signature();
-        $this->display();
+        $this->redirect('mrj/index');
     }
 }

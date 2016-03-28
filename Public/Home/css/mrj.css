@@ -38,7 +38,7 @@
 .dm-notice.in{opacity:1;filter:alpha(opacity=100)}
 .dm-notice .note{display:inline-block;*display:inline;*zoom:1;padding:10px 15px;background:rgba(40,40,40,.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#99282828', endColorstr='#99282828');color:#fff;border-radius:4px}
 :root .dm-notice .note{filter:none\9}
-@font-face{font-family:arc;src:url(../../Static/font/arc.eot);src:url(../../Static/font/arc.eot?#iefix) format("embedded-opentype"),url(../../Static/font/arc.woff) format("woff"),url(../../Static/font/arc.ttf) format("truetype"),url(../../Static/font/arc.svg#arc) format("svg");font-style:normal;font-weight:400}
+@font-face{font-family:arc;src:url(../../static/font/arc.eot);src:url(../../static/font/arc.eot?#iefix) format("embedded-opentype"),url(../../static/font/arc.woff) format("woff"),url(../../static/font/arc.ttf) format("truetype"),url(../../static/font/arc.svg#arc) format("svg");font-style:normal;font-weight:400}
 html{box-sizing:border-box}
 body{font-family:arc,"Lantinghei SC","Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei",微软雅黑,STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif}
 *,:after,:before{box-sizing:inherit}
@@ -63,7 +63,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 15%,5%{opacity:0;filter:alpha(opacity=0)}
 }
 .blink{-webkit-animation:blink 3s infinite;animation:blink 3s infinite}
-.view-index .nickname{position:absolute;right:61.33333%;top:1.99005%;font-size:2rem;line-height:2rem;text-align:right}
+.view-index .nickname{position:absolute;right:61.33333%;top:2.07297%;font-size:1.7rem;line-height:1.7rem;text-align:right}
 .view-index .bmi,.view-index .fat-value{position:absolute;font-size:1.8rem;line-height:1.8rem}
 .view-index .bmi{top:10.36484%;left:70.13333%}
 .view-index .fat-value{top:18.24212%;left:70%}
