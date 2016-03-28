@@ -1,10 +1,4 @@
 $(function () {
-    var getShareObj = function (bmiText) {
-        var shareObj
-        if (bmiText === 'thin') {
-
-        }
-    }
     var share = function (bmi, bmi_text, value) {
         var shareObj
         if (bmi_text === 'thin') {

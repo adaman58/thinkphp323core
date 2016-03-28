@@ -9,7 +9,7 @@ return array(
 
     'SITE_DOMAIN' => 'wx.dreammove.cn',
 
-    'MP' => array( // 微信公众号
+    'MP' => array( // 微信公众号聚募网
         'APP_ID' => 'wx2359f58110dc66e0',
         'APP_SECRET' => '7e83638026e46aec964dd3f9af8a3f06',
         'GRANT_TYPE' => 'client_credential'),

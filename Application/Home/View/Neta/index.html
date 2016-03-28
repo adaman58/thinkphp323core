@@ -50,7 +50,9 @@
         <div class="loading-text"></div>
         <div class="loading-progress">
             <div class="border-blue">
-                <div class="border-white"><div class="loading-train"></div></div>
+                <div class="border-white">
+                    <div class="loading-train"></div>
+                </div>
             </div>
 
         </div>
@@ -78,10 +80,10 @@
     </div>
     <div class="view view-result">
         <div class="icon-share"></div>
-        <div class="link"></div>
+        <a class="db link"></a>
     </div>
 </div>
-<php>print_r($user_info);</php>
+
 
 <!--[if lt IE 9]>
 <script src="__STATIC__/js/jquery-1.11.3.min.js"></script>
@@ -107,7 +109,9 @@
     })
 
     var userInfo = {
-        nickname: "{$user_info.nickname}"
+        nickname: "{$user_info.nickname}",
+        unionid: "{$user_info.unionid}",
+        headimgurl: "{$user_info.headimgurl}"
     }
 
 </script>

@@ -237,7 +237,7 @@ input[type=number]::-webkit-outer-spin-button
     background: url("../img/neta/bg-b.jpg") no-repeat center
     background-size: 100% 100%
     $duration: .7s
-    $delay: $duration * .6
+    $delay: .25s
     &.in
         .a, .b, .c
             &.rise
@@ -288,6 +288,8 @@ input[type=number]::-webkit-outer-spin-button
             animation: blink 3s 1s infinite
         .link
             animation: rise .8s
+            &.swing
+                animation: swing 2s infinite
     .icon-share
         background-image: url(../img/neta/icon-share.png)
         +abs_img(59, 84)
@@ -298,6 +300,7 @@ input[type=number]::-webkit-outer-spin-button
         +abs_img(556, 216)
         left: x(100)
         bottom: y(86)
+
 
 .option
     &.active
@@ -322,3 +325,18 @@ input[type=number]::-webkit-outer-spin-button
 
 .blink
     animation: blink 3s infinite
+
+
+@keyframes swing
+    0%
+        transform-origin: center -10px
+    10%
+        transform: rotate(9deg)
+    20%
+        transform: rotate(-6deg)
+    30%
+        transform: rotate(3deg)
+    40%
+        transform: rotate(-3deg)
+    50%, 100%
+        transform: rotate(0deg)

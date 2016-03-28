@@ -14,13 +14,24 @@ class NetaController extends Controller
     public function index()
     {
         $MP = C('MP');
-        if ($_GET['code']) {
-            $userInfo = get_weixin_user_info();
+        $nickname = session('nickname');
+        if ($nickname || $_GET['code']) {
+            if ($nickname) {
+                $userInfo = Array(
+                    'nickname' => $nickname,
+                    'unionid' => session('unionid'),
+                    'headimgurl' => session('headimgurl')
+                );
+            } else {
+                $userInfo = get_weixin_user_info();
+                if ($userInfo['errcode']) {
+                    $this->redirectAuth();
+                }
 
-            if ($userInfo['errcode']) {
-                $this->redirectAuth();
+                session('nickname', $userInfo['nickname']);
+                session('unionid', $userInfo['unionid']);
+                session('headimgurl', $userInfo['headimgurl']);
             }
-
             $this->user_info = $userInfo;
             $this->appid = $MP['APP_ID'];
             $cached_signature = cache_signature();
@@ -29,6 +40,5 @@ class NetaController extends Controller
         } else {
             $this->redirectAuth();
         }
-
     }
 }
