@@ -1,4 +1,6 @@
-
+if (typeof dm === "undefined") {
+    dm = {}
+}
 if (typeof jQuery === "undefined" || jQuery === null) {
     throw new Error('modal.js requires jQuery')
 }
@@ -9,55 +11,54 @@ if (Modernizr.csstransitions == null) {
 
 (function ($) {
     'use strict';
-    var transitionEnd = (function () {
-        var el, key, transEndEventNames, value;
-        el = document.createElement('div');
-        transEndEventNames = {
-            WebkitTransition: 'webkitTransitionEnd',
-            MozTransition: 'transitionend',
-            OTransition: 'oTransitionEnd otransitionend',
-            transition: 'transitionend'
-        };
-        for (key in transEndEventNames) {
-            value = transEndEventNames[key];
+    var transitionEnd = function () {
+        var el = document.createElement('div'),
+            transEndEventNames = {
+                WebkitTransition: 'webkitTransitionEnd',
+                MozTransition: 'transitionend',
+                OTransition: 'oTransitionEnd otransitionend',
+                transition: 'transitionend'
+            }
+        for (var key in transEndEventNames) {
+            var value = transEndEventNames[key]
             if (el.style[key] != null) {
-                return value;
+                return value
             }
         }
-        return false;
-    })()
+        return false
+    }()
     $.fn.emulateTransitionEnd = function (duration) {
-        var $el, callback, called;
-        called = false;
-        $el = this;
+        var called = false,
+            $el = this
         $el.one('dmTransitionEnd', function () {
-            return called = true;
-        });
-        callback = function () {
+            return called = true
+        })
+        var callback = function () {
             if (!called) {
-                return $el.trigger(transitionEnd || '');
+                return $el.trigger(transitionEnd || '')
             }
-        };
-        setTimeout(callback, duration);
-        return this;
+        }
+        setTimeout(callback, duration)
+        return this
     };
     $(function () {
         if (!transitionEnd) {
-            return;
+            return
         }
         $.event.special.dmTransitionEnd = {
             bindType: transitionEnd,
             delegateType: transitionEnd,
             handle: function (e) {
                 if ($(e.target).is(this)) {
-                    return e.handleObj.handler.apply(this, arguments);
+                    return e.handleObj.handler.apply(this, arguments)
                 }
             }
-        };
-    });
+        }
+    })
 })(jQuery);
 
 !function ($) {
+    'use strict'
     var TRANSITION_DURATION = 150
         , BACKDROP_TRANSITION_DURATION = 150
         , DEFAULT = {
@@ -288,7 +289,9 @@ if (Modernizr.csstransitions == null) {
                 paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
                 paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
             })
-            this.$dialog.css('margin-top', this.$modal.data('mt') || (document.documentElement.clientHeight - this.$dialog.outerHeight()) / 2 - 30)
+            var mt = this.$modal.data('mt')
+            if (mt == null) mt = (document.documentElement.clientHeight - this.$dialog.outerHeight()) / 2 - 30
+            this.$dialog.css('margin-top', mt)
             return this
         }
 
@@ -314,10 +317,15 @@ if (Modernizr.csstransitions == null) {
 
         Modal.prototype.setScrollbar = function () {
             var bodyPad = parseInt(this.$body.css('padding-right') || 0, 10)
-            this.originalBodyPad = document.body.style.paddingRight || ''
-            if (this.bodyIsOverflowing) {
+            if (this.bodyIsOverflowing && !$(document.body).hasClass('modal-open')) {
                 this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
             }
+            if ($(document.body).hasClass('modal-open')) {
+                this.originalBodyPad = bodyPad - this.scrollbarWidth
+            } else {
+                this.originalBodyPad = bodyPad
+            }
+
             return this
         }
 
@@ -362,7 +370,7 @@ if (Modernizr.csstransitions == null) {
     })
 }(jQuery)
 
-window.dmAlert = function (msg, callback) {
+dm.alert = function (msg, callback) {
     var $modal = $('<div class="modal modal-alert fade" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">提示<button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn-primary" data-dismiss="modal">确定</button></div></div></div></div>').appendTo($(document.body))
     $modal.on('hidden', function () {
         $modal.remove()
@@ -373,7 +381,7 @@ window.dmAlert = function (msg, callback) {
     $modal.find('.modal-body').html(msg)
     return $modal.modal()
 }
-window.dmConfirm = function (msg, options, yes, no, cancel) {
+dm.confirm = function (msg, options, yes, no, cancel) {
     var defaultOption = {
         yes: '确定',
         no: '取消'
@@ -405,19 +413,34 @@ window.dmConfirm = function (msg, options, yes, no, cancel) {
     $modal.find('.modal-body').html(msg)
     return $modal.modal()
 }
-dm.alert = window.dmAlert
-dm.confirm = window.dmConfirm
-
 dm.notice = function (msg, callback) {
-    var $notice = $('<div class="dm-notice"><div class="note">' + msg + '</div></div>').appendTo('body')
+    var $notice = $('.dm-notice')
+    if ($notice.length) {
+        var $textWrap = $notice.children('.text-wrap')
+        if ($textWrap.html() === msg) {
+            $notice.addClass('animated shake').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $notice.removeClass('animated shake')
+            })
+        } else {
+            $textWrap.html(msg)
+        }
+    } else {
+        $notice = $('<div class="dm-notice"><div class="text-wrap">' + msg + '</div></div>').appendTo('body')
+    }
+
+    $notice.off('dmTransitionEnd')
+
     $notice[0].offsetWidth
     $notice.addClass('in')
-    setTimeout(function () {
+    clearTimeout($notice.data('outTimer'))
+    var duration = Math.max($('<a>' + msg + '</a>').text().length, 10) * 300
+    duration = Math.min(30000, duration)
+    $notice.data('outTimer', setTimeout(function () {
         $notice.removeClass('in').one('dmTransitionEnd', function () {
             $(this).remove()
             callback && callback()
         }).emulateTransitionEnd(400)
-    }, Math.max($('<u>' + msg + '</u>').text().length, 10) * 300)
+    }, duration))
 }
 
 !function ($) {

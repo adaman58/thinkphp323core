@@ -1,0 +1,121 @@
+<extend name="base"/>
+
+<block name="main">
+<div class="view-win">
+    <div class="view view-form in">
+        <form action="" class="form-bm">
+            <h2 class="tac w-80 hc">欢迎报名参加"横店穿越行"</h2>
+
+            <div class="flex w-80 hc">
+                <label for="realname">姓名：</label>
+                <div class="ctrl-wrap flex-1">
+                    <input type="text" id="realname">
+                </div>
+            </div>
+            <div class="flex w-80 hc">
+                <label for="tel">电话：</label>
+                <div class="ctrl-wrap flex-1">
+                    <input type="tel" id="tel">
+                </div>
+            </div>
+            <div class="flex w-80 hc">
+                <label for="intro">简介：</label>
+                <div class="ctrl-wrap flex-1">
+                    <textarea name="" id="intro"></textarea>
+                </div>
+            </div>
+            <div class="flex w-80 hc">
+                <div>图片：</div>
+                <div class="ctrl-wrap flex-1">
+                    <input type="file" accept="image/*" id="input-pic">
+                    <label for="input-pic" class="">选择照片</label>
+                    (个人或项目Logo)
+                </div>
+            </div>
+            <div class="cropped-img-preview p-6 tac"></div>
+            <div class="tac">
+                <button type="button" class="btn-generate">生成图片</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal modal-cropper fade" tabindex="-1" data-mt="0">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">裁剪照片</h4>
+            </div>
+            <div class="modal-body">
+                <div class="loading">正在生成缩略图, 可能需要花费一点时间...</div>
+                <div class="cropper-wrap mt-10">
+                    <img src="" id="img-preview" noerr>
+                </div>
+                <div class="preview-box hc mt-6"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-crop">确定</button>
+                <button type="button" class="btn btn-o" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+
+<block name="script">
+<script src="__STATIC__/js/cropper.min.js"></script>
+<script src="__STATIC__/lrz/lrz.bundle.js"></script>
+<script>
+    $(function () {
+        var $img = $('#img-preview'),
+                $btnGenerate = $('.btn-generate'),
+                $loading = $('.loading'),
+                $modal = $('.modal-cropper'),
+                imgData = ''
+        $('#input-pic').on('click', function () {
+            this.value = null
+        }).on('change', function () {
+            if (this.files.length === 0) return
+            var modalShown = 0
+            $modal.modal().on('shown', function () {
+                modalShown = 1
+            })
+            $loading.show()
+
+            lrz(this.files[0]).then(function (rst) {
+                $loading.hide()
+                var crop = function () {
+                    if ($img.attr('src')) {
+                        $img.cropper('replace', rst.base64)
+                    } else {
+                        $img.attr('src', rst.base64).cropper({
+                            viewMode: 1,
+                            dragMode: 'move',
+                            aspectRatio: 16 / 9,
+                            preview: '.preview-box'
+                        })
+                        $btnGenerate.prop('disabled', false)
+                    }
+                }
+                if (modalShown) crop()
+                else {
+                    $modal.on('shown', crop)
+                }
+            }).catch(function (err) {
+                dm.alert(err)
+            })
+        })
+        $('.btn-crop').on('click', function () {
+            $modal.modal('hide')
+            imgData = $img.cropper('getCroppedCanvas', {
+                width: 320
+            }).toDataURL()
+        })
+        $btnGenerate.on('click', function () {
+
+        })
+    })
+</script>
+</block>
+

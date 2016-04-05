@@ -301,7 +301,6 @@ input[type=number]::-webkit-outer-spin-button
         left: x(100)
         bottom: y(86)
 
-
 .option
     &.active
         filter: hue-rotate(100deg)
@@ -326,7 +325,6 @@ input[type=number]::-webkit-outer-spin-button
 .blink
     animation: blink 3s infinite
 
-
 @keyframes swing
     0%
         transform-origin: center -10px
@@ -340,3 +338,24 @@ input[type=number]::-webkit-outer-spin-button
         transform: rotate(-3deg)
     50%, 100%
         transform: rotate(0deg)
+
+@keyframes rotate
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+.audio-switch
+    position: fixed
+    width: 1.5rem
+    height: 1.5rem
+    right: 1rem
+    top: 1rem
+    //box-shadow: 0 0 3px 0 rgba(0, 0, 0, .5)
+    opacity: 0
+    visibility: hidden
+    &.in
+        opacity: 1
+        visibility: visible
+    &.playing
+        animation: rotate 3s linear infinite

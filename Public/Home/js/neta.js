@@ -41,6 +41,36 @@ var share = function (character) {
         wx.onMenuShareAppMessage(shareObj)
     })
 }
+var audioHelper = function () {
+    var audio, $switch
+    return {
+        init: function () {
+            audio = $('#audio-bg').get(0)
+            $switch = $('.audio-switch')
+            $switch.on('click', function () {
+                if ($switch.hasClass('playing')) {
+                    audioHelper.pause()
+                } else {
+                    audioHelper.play()
+                }
+            })
+        },
+        play: function () {
+            audio.play()
+            $switch.addClass('playing')
+            return this
+        },
+        pause: function () {
+            audio.pause()
+            $switch.removeClass('playing')
+            return this
+        },
+        showSwitch: function () {
+            $switch.addClass('in')
+            return this
+        }
+    }
+}()
 
 $(function () {
     var $views = $('.view')
@@ -85,8 +115,8 @@ $(function () {
 
 
         /*$('.view-result').css({
-            "background-image": "url(/Public/Home/img/neta/result/" + sex + "-" + rAge + ".jpg)"
-        })*/
+         "background-image": "url(/Public/Home/img/neta/result/" + sex + "-" + rAge + ".jpg)"
+         })*/
         share('' + sex + rAge)
     })
 
@@ -96,6 +126,7 @@ $(function () {
             loaded = true
             $('.view').removeClass('in')
             $('.view-index').addClass('in')
+            audioHelper.showSwitch().play()
         }
     }
 
@@ -108,5 +139,6 @@ $(function () {
         }, 2000)
     })
 
+    audioHelper.init()
 
 })
