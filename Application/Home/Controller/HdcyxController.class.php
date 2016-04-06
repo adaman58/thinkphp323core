@@ -47,6 +47,7 @@ class HdcyxController extends Controller
     {
         $MP = C('MP');
         $nickname = session('nickname');
+        $nickname = 'aaaaaaaaaaa';
         if ($nickname || $_GET['code']) {
             if ($nickname) {
                 $userInfo = Array(

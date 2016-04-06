@@ -2,41 +2,33 @@
 
 <block name="main">
 <div class="view-win">
-    <div class="view view-form in">
-        <form action="" class="form-bm">
-            <h2 class="tac w-80 hc">欢迎报名参加"横店穿越行"</h2>
+    <div class="view view-form in c-primary">
+        <form action="" class="form-bm w-94 hc fzqkbys">
+            <h3 class="tac w-80 hc fwn">欢迎报名参加</h3>
+            <h2 class="ywsfxs tac fwn">“横店穿越行”</h2>
 
-            <div class="flex w-80 hc">
-                <label for="realname">姓名：</label>
-                <div class="ctrl-wrap flex-1">
-                    <input type="text" id="realname">
+            <div class="ctrl-group">
+                <label for="intro">请输入您的报名宣言</label>
+                <div class="ctrl-wrap">
+                    <textarea name="" id="intro" class="textarea-intro" placeholder="填写简介，让大家了解你为你助威！（32字以内）" maxlength="32"></textarea>
                 </div>
             </div>
-            <div class="flex w-80 hc">
-                <label for="tel">电话：</label>
-                <div class="ctrl-wrap flex-1">
-                    <input type="tel" id="tel">
+            <div class="ctrl-group">
+                <label for="tel">请输入您的联系方式：</label>
+                <div class="ctrl-wrap">
+                    <input type="tel" id="tel" placeholder="手机号码" maxlength="13">
                 </div>
             </div>
-            <div class="flex w-80 hc">
-                <label for="intro">简介：</label>
-                <div class="ctrl-wrap flex-1">
-                    <textarea name="" id="intro"></textarea>
-                </div>
-            </div>
-            <div class="flex w-80 hc">
-                <div>图片：</div>
-                <div class="ctrl-wrap flex-1">
-                    <input type="file" accept="image/*" id="input-pic">
-                    <label for="input-pic" class="">选择照片</label>
-                    (个人或项目Logo)
-                </div>
-            </div>
-            <div class="cropped-img-preview p-6 tac"></div>
             <div class="tac">
-                <button type="button" class="btn-generate">生成图片</button>
+                <img src="__IMG__/hdcyx/btn-bm.png" alt="提交报名" class="btn-generate db w-40 hc">
             </div>
+            <div class="img-bm"></div>
+            <div class="s-footer"></div>
         </form>
+
+    </div>
+    <div class="view view-img">
+        <img src="" alt="" noerr>
     </div>
 </div>
 
@@ -111,9 +103,17 @@
             imgData = $img.cropper('getCroppedCanvas', {
                 width: 320
             }).toDataURL()
+            $('.img-cropped').attr('src', imgData)
+            $('.pick-wrap').hide()
+            $('.cropped-img-preview').show()
         })
         $btnGenerate.on('click', function () {
-
+            dm.loading()
+            setTimeout(function () {
+                dm.loading('hide')
+                $('.view').removeClass('in')
+                $('.view-img').addClass('in')
+            }, 3000)
         })
     })
 </script>

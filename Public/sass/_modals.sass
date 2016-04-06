@@ -136,7 +136,13 @@
         button
             margin-left: 10px
 
-
+@keyframes notice-shake
+    from, to
+        transform: translate3d(0, 0, 0)
+    10%, 30%, 50%, 70%, 90%
+        transform: translate3d(-8px, 0, 0)
+    20%, 40%, 60%, 80%
+        transform: translate3d(8px, 0, 0)
 
 .dm-notice
     position: fixed
@@ -146,15 +152,24 @@
     transition: all .4s
     opacity: 0
     z-index: 999
+    transform: translateY(50%)
     &.in
         opacity: 1
-    .note
+        transform: none
+    &.shake
+        animation: notice-shake 1s
+    .text-wrap
         display: inline-block
         padding: 10px 15px
         background: rgba(40, 40, 40, .6)
         color: #fff
         border-radius: 4px
 
+.modal-loading
+    .modal-dialog
+        text-align: center
+        padding-top: 40px
+        background: transparent url("../img/ajax-loading.gif") no-repeat center top
 
 
 
