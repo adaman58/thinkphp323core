@@ -23,7 +23,7 @@
         window.addEventListener('error', function (e) {
             var target = e.target
             if (target.tagName === 'IMG' && target.getAttribute('noerr') == null) {
-                target.onerror = null
+                target.setAttribute('noerr', 1)
                 target.src = '__IMG__/' + 'default-img.jpg'
             }
         }, true)

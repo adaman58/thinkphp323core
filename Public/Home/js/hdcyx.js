@@ -40,6 +40,7 @@ var countdownHelper = function () {
         }
     }
 }()
+
 $(function () {
     countdownHelper.init()
     $('.img-support').on('click', function () {
@@ -47,10 +48,25 @@ $(function () {
             dm.notice('你已助威过了')
             return
         }
-        var $count = $('.support-count'),
-            count = parseInt($count.text(), 10)
-        $count.html(count + 1)
-        dm.notice('助威成功')
-        userHasSupport = 1
+        $.post($(this).data('voteUrl'), {
+            targetOpenId: '',
+            myOpenId: ''
+        }).then(function (json) {
+            if (json.status == 1) {
+                var $count = $('.support-count'),
+                    count = parseInt($count.text(), 10)
+                $count.html(count + 1)
+                $('.view-success').addClass('in')
+                userHasSupport = 1
+                $('.fly-count-plus').addClass('in')
+            } else {
+
+            }
+        })
+
+
+    })
+    $('.view-success').one('click', function () {
+        $(this).removeClass('in')
     })
 })

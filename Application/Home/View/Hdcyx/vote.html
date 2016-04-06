@@ -1,0 +1,38 @@
+<extend name="base"/>
+<block name="main">
+<div class="view-win">
+    <div class="view view-support in">
+        <div class="stage fzqkbys tac">
+            <h3 class="fwn ellipsis w-94">我愿意助威 <strong class="fwn c-3 nickname">{$nickname}</strong>参与</h3>
+            <h2 class="fwn ywsfxs">“聚募众筹之穿越夜”</h2>
+            <div class="img-support" data-vote-url="{:U('hdcyx/votePost')}">
+                <img class="avatar" src="{$headimgurl}" />
+                <img class="btn-support" src="__IMG__/hdcyx/btn-support.png" alt="">
+                <img class="support-1" src="__IMG__/hdcyx/support-1.png" alt="">
+                <img class="support-2" src="__IMG__/hdcyx/support-2.png" alt="">
+            </div>
+            <div class="c-3 fz-small text-var por">
+                已有 <strong class="c-danger support-count">123</strong> 人为他助威 &nbsp; &nbsp; &nbsp; &nbsp; 倒数计时: <var class="countdown">3 天 13 小时</var>
+                <strong class="fly-count-plus c-danger">+1</strong>
+            </div>
+            <div class="fz-small">如果你也想与知名投资人来一场说走就走的旅行！</div>
+            <div class="fz-small">如果你也想与知名投资机构畅谈未来3年创业方向！</div>
+            <div class="ywsfxs fz-big w-80 hc">仅剩 <strong class="c-danger">3</strong> 个名额<br><u class="fz-bigger"> &nbsp; 等你来抢！</u></div>
+            <div class="qr-bm tac">
+                <img src="__IMG__/hdcyx/qr-bm.png" alt="" class="db w-80 hc">
+            </div>
+            <div class="s-footer"></div>
+        </div>
+    </div>
+    <div class="view view-success">
+        <img src="__IMG__/hdcyx/support-success-light.png" alt="" class="img-success-light">
+        <img src="__IMG__/hdcyx/support-success.png" alt="" class="img-success">
+    </div>
+</div>
+</block>
+
+<block name="script">
+<script>
+    var userHasSupport = 0
+</script>
+</block>

@@ -10,6 +10,7 @@
 $breakpoints: (tiny: 360px, small: 480px, medium: 768px, large: 1024px)
 
 $c-primary: #CA9F75
+$c-danger: #B61616
 
 @function rem($px)
     @return $px / 1080 * 20rem
@@ -31,8 +32,10 @@ body
 
 *, *:before, *:after
     box-sizing: inherit
+
 var
     font-style: normal
+
 u
     text-decoration: none
 
@@ -80,12 +83,13 @@ img
     background: url("../img/hdcyx/bg-bm.png") no-repeat center
     background-size: cover
     h3
-        font-size: 1.5rem
-        margin-bottom: .8rem
+        font-size: 1rem
+        margin-top: 1rem
+        margin-bottom: .5rem
     h2
-        margin-top: .8rem
-        margin-bottom: 1.2rem
-        font-size: 2.2rem
+        margin-top: .5rem
+        margin-bottom: 1rem
+        font-size: 1.8rem
     .form-bm
         position: absolute
         left: 10px
@@ -95,43 +99,79 @@ img
         border: 1px solid
         box-shadow: 0 0 1px 1px
     .ctrl-group
-        margin: 10px auto
+        margin: .5rem auto
         width: 76%
     input, textarea
         width: 100%
         border: none
         background: #EBE8E1
-        line-height: 2
-        font-size: .8rem
-        padding: .3em .8em
+        line-height: 1.8
+        font-size: .7rem
+        padding: .4em .8em
         font-family: $font-family-sans-serif
         &::-webkit-input-placeholder
             font-family: 'fzqkbys', $font-family-sans-serif
             color: #C4C1BF
     textarea
-        height: 0.3 * 0.8rem + 3 * 0.8rem * 2
+        height: 0.3 * 0.8rem + 2 * 0.8rem * 2
 
     input[type="file"]
         +ghost-hidden
     label
         color: #967B5D
-        font-size: 1rem
+        font-size: .75rem
         display: block
         line-height: 2
         font-family: 'fzqkbys', $font-family-sans-serif
     .btn-generate
-        margin-top: 1rem
+        margin-top: .8rem
     .img-bm
         position: absolute
         width: 100%
-        bottom: 3.6rem
+        bottom: 3.5rem
         background: url("../img/hdcyx/img-bm.png") no-repeat center
         background-size: 27%
         padding-bottom: 194 / 168 * 27%
 
 .view-img
-    img
+    background: url("../img/hdcyx/bg-img.jpg") no-repeat center
+    background-size: cover
+    color: #9f948c
+    text-align: center
+    font-size: .8rem
+    .share-hint
+        margin: .7rem auto
+        line-height: 1.6
+
+    .img-generated
         display: block
+        width: 80%
+        margin-left: 10%
+    .btn-edit
+        float: right
+        margin-top: .8rem
+        margin-right: 10%
+        padding: 2px 10px
+        border: 1px solid
+        border-radius: 3px
+        font-size: 12px
+
+@keyframes light-rotate
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+.view-success
+    background: rgba(0, 0, 0, .8)
+    overflow: hidden
+    .img-success, .img-success-light
+        position: absolute
+        width: 100%
+        bottom: 1rem
+    &.in
+        .img-success-light
+            animation: light-rotate 5s linear infinite
 
 .s-footer
     position: absolute
@@ -153,6 +193,13 @@ img
         height: 400px
         overflow: hidden
 
+@keyframes fly
+    from
+        opacity: 1
+    to
+        opacity: 0
+        transform: translateY(-3rem)
+
 .view-support
     background: url("../img/hdcyx/bg-support.png") no-repeat center
     background-size: 100% 100%
@@ -166,15 +213,47 @@ img
         border: 1px solid
         box-shadow: 0 0 1px 1px
         padding-top: .5rem
-    h2
-        font-size: 1.6rem
+    h3
+        font-size: 1.2rem
         margin: .5rem auto
+    h2
+        font-size: 1.5rem
+        margin: .5rem auto
+    .nickname
+        color: #173A60
+        margin-left: .3rem
+        margin-right: .3rem
+        vertical-align: bottom
+        display: inline-block
+        max-width: 5em
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+        word-wrap: normal
+        font-family: $font-family-sans-serif
     .img-support
-        background: url("../img/hdcyx/btn-support.png") no-repeat center
-        background-size: 45% auto
-        padding-bottom: 189 / 265 * 45%
         margin-top: 1rem
         margin-bottom: 1rem
+        position: relative
+    .avatar, .btn-support
+        display: block
+        margin-left: auto
+        margin-right: auto
+    .support-1, .support-2
+        position: absolute
+        bottom: 0
+        width: 3rem
+    .avatar
+        width: 3.6rem
+        height: 3.6rem
+        border-radius: 1.7rem
+    .btn-support
+        width: 6rem
+        margin-top: -.5rem
+    .support-1
+        left: 2.5rem
+    .support-2
+        right: 2.5rem
     .text-var
         margin-bottom: .8rem
     .fz-small
@@ -190,5 +269,19 @@ img
         position: absolute
         width: 100%
         bottom: 3.7rem
+    .fly-count-plus
+        position: absolute
+        left: 3.6rem
+        bottom: 0
+        opacity: 0
+        transition: all .4s
+        &.in
+            animation: fly 1s
+
+.modal-loading
+    .modal-dialog
+        background: url("../img/hdcyx/loading.gif") no-repeat center
+        background-size: 60% auto
+        padding-bottom: 390 / 400 * 60%
 
 @import "../../sass/atom"

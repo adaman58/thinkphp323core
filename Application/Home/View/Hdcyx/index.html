@@ -2,33 +2,44 @@
 
 <block name="main">
 <div class="view-win">
-    <div class="view view-form in c-primary">
+    <div class="view view-form <neq name='has_bm' value='1'>in</neq> c-primary">
         <form action="" class="form-bm w-94 hc fzqkbys">
             <h3 class="tac w-80 hc fwn">欢迎报名参加</h3>
-            <h2 class="ywsfxs tac fwn">“横店穿越行”</h2>
+            <h2 class="ywsfxs tac fwn">“聚募众筹之穿越夜”</h2>
 
             <div class="ctrl-group">
-                <label for="intro">请输入您的报名宣言</label>
+                <label for="realname">请输入您的真实姓名：</label>
                 <div class="ctrl-wrap">
-                    <textarea name="" id="intro" class="textarea-intro" placeholder="填写简介，让大家了解你为你助威！（32字以内）" maxlength="32"></textarea>
+                    <input type="text" id="realname" placeholder="真实姓名" maxlength="5" required>
                 </div>
             </div>
             <div class="ctrl-group">
                 <label for="tel">请输入您的联系方式：</label>
                 <div class="ctrl-wrap">
-                    <input type="tel" id="tel" placeholder="手机号码" maxlength="13">
+                    <input type="tel" id="tel" placeholder="手机号码" maxlength="13" required>
+                </div>
+            </div>
+            <div class="ctrl-group">
+                <label for="intro">请输入您的报名宣言</label>
+                <div class="ctrl-wrap">
+                    <textarea name="" id="intro" class="textarea-intro" placeholder="填写简介，让大家了解你为你助威！（32字以内）"
+                              maxlength="32" required></textarea>
                 </div>
             </div>
             <div class="tac">
-                <img src="__IMG__/hdcyx/btn-bm.png" alt="提交报名" class="btn-generate db w-40 hc">
+                <img src="__IMG__/hdcyx/btn-bm.png" alt="提交报名" class="btn-generate db w-36 hc">
             </div>
             <div class="img-bm"></div>
             <div class="s-footer"></div>
         </form>
 
     </div>
-    <div class="view view-img">
-        <img src="" alt="" noerr>
+    <div class="view view-img <eq name='has_bm' value='1'>in</eq>">
+        <div class="share-hint fzqkbys">长按图片保存分享给好友<br>让大家送我去穿越</div>
+        <img src="{$bm_img}" alt="" class="img-generated" noerr>
+        <div class="tar">
+            <div class="btn-edit fzqkbys">修 改</div>
+        </div>
     </div>
 </div>
 
@@ -53,6 +64,7 @@
         </div>
     </div>
 </div>
+<div class="modal modal-loading fade" data-backdrop="static" data-backdrop-color="white"><div class="modal-dialog"></div></div>
 </block>
 
 <block name="script">
@@ -108,12 +120,34 @@
             $('.cropped-img-preview').show()
         })
         $btnGenerate.on('click', function () {
-            dm.loading()
-            setTimeout(function () {
-                dm.loading('hide')
-                $('.view').removeClass('in')
-                $('.view-img').addClass('in')
-            }, 3000)
+            var tel = $('#tel').val(),
+                    realname = $('#realname').val(),
+                    intro = $('#intro').val()
+            if (!tel || !realname || !intro) {
+                dm.notice('请填写完整的报名信息')
+                return
+            }
+            $('.modal-loading').modal()
+            $.post("{:U('hdcyx/updateData')}", {
+                openId: userInfo.unionid,
+                mobile: tel,
+                name: realname,
+                describe: intro,
+                image: userInfo.headimgurl
+            }).then(function (json) {
+                $('.modal-loading').modal('hide')
+                if (json.status == 1) {
+                    $('.view').removeClass('in')
+                    $('.view-img').addClass('in')
+                    $('.img-generated').attr('src', json.img_path)
+                } else {
+                    dm.notice('错误')
+                }
+            })
+        })
+        $('.btn-edit').on('click', function () {
+            $('.view').removeClass('in')
+            $('.view-form').addClass('in')
         })
     })
 </script>
