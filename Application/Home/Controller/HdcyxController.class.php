@@ -6,7 +6,7 @@ use Think\Controller;
 
 class HdcyxController extends Controller
 {
-    CONST END_TIME = 1459958400; // 1460563200
+    CONST END_TIME = 1460563200; // 1460563200
     private function redirectAuth()
     {
         redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/index.html')));
@@ -54,8 +54,8 @@ class HdcyxController extends Controller
     /** 报名 **/
     public function updateData()
     {
-        if (END_TIME < NOW_TIME) {
-            $this->ajaxReturn(array('status'=>0, 'info'=>'活动报名已结束，感谢您的参与。'));
+        if (self::END_TIME < NOW_TIME) {
+            $this->ajaxReturn(array('status'=>0, 'info'=>('活动报名已结束，感谢您的参与。' . NOW_TIME)));
         }
         $data = array('openId' => $_REQUEST['openId'], 'mobile' => $_REQUEST['mobile'],
             'name' => $_REQUEST['name'], 'describe' => $_REQUEST['describe'], 'img_path' => $_REQUEST['image'], 'face_img' => $_REQUEST['image']);
@@ -218,7 +218,7 @@ class HdcyxController extends Controller
 
     public function votepost()
     {
-        if (END_TIME < NOW_TIME) {
+        if (self::END_TIME < NOW_TIME) {
             $this->ajaxReturn(array('status'=>0, 'info'=>'活动投票已结束，感谢您的参与。'));
         }
         $openId = $_REQUEST['openId'];
