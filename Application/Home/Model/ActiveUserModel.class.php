@@ -28,5 +28,15 @@ class ActiveUserModel extends MongoModel {
 
 		return $temp;
 	}
+
+	/** 投票统计**/
+	public function update_vote($openId) {
+		$where = array('openId' => $openId);
+		$temp = $this->where($where)->find();
+		if ($temp) {
+			$temp['vote_count'] = $temp['vote_count'] + 1;
+			$this->where($where)->save($temp);	
+		}
+	}
 }
 ?>
