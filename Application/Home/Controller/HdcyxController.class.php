@@ -80,7 +80,7 @@ class HdcyxController extends Controller
         $size = getimagesize($path);
         $image = new \Think\Image();
         $image->open($path);
-        $image->thumb(230, 230, \Think\Image::IMAGE_THUMB_FIXED);
+        $image->thumb(187, 187, \Think\Image::IMAGE_THUMB_FIXED);
 
         $image->save($path);
         $img_url = 'http://' . C('SITE_DOMAIN') . '/Uploads/face/face_' . $data['openId'] . '.png';
@@ -92,7 +92,7 @@ class HdcyxController extends Controller
     private function composeImg($data)
     {
         $img_url = '/Uploads/new/';
-        $bg_path = APP_PATH . '../Uploads/base/bg3.png';
+        $bg_path = APP_PATH . '../Uploads/base/bg.jpg';
         $out_path = APP_PATH . '../Uploads/new/';
         $font_path = APP_PATH . '../Uploads/font/yahei.ttf';
         $bg1_path = $data['face_img'];
@@ -103,15 +103,17 @@ class HdcyxController extends Controller
         // 头像圆形处理
         $user_img = new \image_cutter($bg1_path);
         // 添加圆形头像到背景图指定位置
-        imagecopy($dst, $user_img->cutted_image, 75, 70, 0, 0, 230, 230);
-        // 文字颜色
-        $font_color = imagecolorallocate($dst, 0xca, 0x9f, 0x75);
+        imagecopy($dst, $user_img->cutted_image, 80, 180, 0, 0, 187, 187);
+        // 文字颜色-名字
+        $font_color = imagecolorallocate($dst, 0x43, 0x37, 0x2b);
         // 添加姓名文字到背景图
-        imagefttext($dst, 42, 0, 75, 380, $font_color, $font_path, $data['name']);
+        imagefttext($dst, 45, 0, 350, 365, $font_color, $font_path, $data['name']);
+        // 文字颜色-描述
+        $font_color = imagecolorallocate($dst, 0xca, 0x9f, 0x75);
         // 描述文字内容过长时，自动换行
-        $describe = autowrap(20, 0, $font_path, $data['describe'], 440);
+        $describe = autowrap(24, 0, $font_path, $data['describe'], 640);
         // 添加描述文字到背景图
-        imagefttext($dst, 20, 0, 73, 430, $font_color, $font_path, $describe);
+        imagefttext($dst, 24, 0, 73, 450, $font_color, $font_path, $describe);
 
         // 获取二维码图片地址
         $qrCode = $this->qrCode($data['openId']);
@@ -122,8 +124,8 @@ class HdcyxController extends Controller
         // 二维码大小
         $src_size = getimagesize($qrCode);
         // 二维码在背景图的坐标
-        $x = $dst_size[0] - $src_size[0] - 50;
-        $y = $dst_size[1] - $src_size[1] - 110;
+        $x = 50;
+        $y = 600;
         // 添加二维码到背景图
         imagecopy($dst, $src, $x, $y, 0, 0, $src_size[0], $src_size[1]);
 
@@ -159,7 +161,7 @@ class HdcyxController extends Controller
     {
         $url = 'http://my.tv.sohu.com/user/a/wvideo/getQRCode.do?';
         $text = urlencode('http://wx.dreammove.cn/hdcyx/vote/openId/' . $openId);
-        $url = $url . 'width=200&height=200&text=' . $text;
+        $url = $url . 'width=240&height=240&text=' . $text;
 
         return $url;
     }
