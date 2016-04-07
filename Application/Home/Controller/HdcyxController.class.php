@@ -25,7 +25,9 @@ class HdcyxController extends Controller
                     'headimgurl' => $info['headimgurl']
                 );
             } else {
-            
+                if(empty($_GET['code'])) {
+                    $this->redirectAuth();
+                }
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
                     $this->redirectAuth();
@@ -181,6 +183,9 @@ class HdcyxController extends Controller
                     'headimgurl' => $info['headimgurl']
                 );
             } else {
+                if(empty($_GET['code'])) {
+                    redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html')));
+                }
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
                     redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html')));
