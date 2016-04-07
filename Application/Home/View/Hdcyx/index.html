@@ -147,7 +147,7 @@
                     $('.view-img').addClass('in')
                     $('.img-generated').attr('src', json.img_path)
                 } else {
-                    dm.notice('错误')
+                    dm.notice(json.info)
                 }
             }, function () {
                 $('.modal-loading').modal('hide')
