@@ -6,7 +6,7 @@ use Think\Controller;
 
 class HdcyxController extends Controller
 {
-
+    CONST END_TIME = 1459958400; // 1460563200
     private function redirectAuth()
     {
         redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/index.html')));
@@ -25,6 +25,7 @@ class HdcyxController extends Controller
                     'headimgurl' => $info['headimgurl']
                 );
             } else {
+            
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
                     $this->redirectAuth();
@@ -32,6 +33,7 @@ class HdcyxController extends Controller
                 $openid = $userInfo['unionid'];
                 cookie('openid', $userInfo['unionid'], 604800);
             }
+
             $this->user_info = $userInfo;
             $this->appid = $MP['APP_ID'];
             $cached_signature = cache_signature();
@@ -52,6 +54,9 @@ class HdcyxController extends Controller
     /** 报名 **/
     public function updateData()
     {
+        if (END_TIME < NOW_TIME) {
+            $this->ajaxReturn(array('status'=>0, 'info'=>'活动报名已结束，感谢您的参与。'));
+        }
         $data = array('openId' => $_REQUEST['openId'], 'mobile' => $_REQUEST['mobile'],
             'name' => $_REQUEST['name'], 'describe' => $_REQUEST['describe'], 'img_path' => $_REQUEST['image'], 'face_img' => $_REQUEST['image']);
 
@@ -106,7 +111,7 @@ class HdcyxController extends Controller
         // 描述文字内容过长时，自动换行
         $describe = autowrap(20, 0, $font_path, $data['describe'], 440);
         // 添加描述文字到背景图
-        imagefttext($dst, 20, 0, 73, 450, $font_color, $font_path, $describe);
+        imagefttext($dst, 20, 0, 73, 430, $font_color, $font_path, $describe);
 
         // 获取二维码图片地址
         $qrCode = $this->qrCode($data['openId']);
@@ -213,6 +218,9 @@ class HdcyxController extends Controller
 
     public function votepost()
     {
+        if (END_TIME < NOW_TIME) {
+            $this->ajaxReturn(array('status'=>0, 'info'=>'活动投票已结束，感谢您的参与。'));
+        }
         $openId = $_REQUEST['openId'];
         $myOpenId = $_REQUEST['myOpenId'];
 

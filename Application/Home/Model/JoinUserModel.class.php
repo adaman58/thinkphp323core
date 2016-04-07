@@ -14,6 +14,7 @@ class JoinUserModel extends MongoModel
         if (!$temp) {
             $key = (array)$this->add($data);
             $key = $key['$id'];
+            D('ActiveUser')->update_vote($data['activeId']);
         } else {
             $this->error = '您今天已经参与了投票，请您明天再来支持他。';
             return false;

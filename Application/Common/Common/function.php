@@ -28,7 +28,7 @@ function put_file_from_url_content($url, $filename) {
     curl_close ( $curl );
     // 将文件写入获得的数据
     
-    if (file_exists($filename)) {unlink($filename);}
+    if (file_exists($filename)) {$ret = unlink($filename);}
     file_put_contents($filename, $file);
 
     return true;
