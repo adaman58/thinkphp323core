@@ -4,7 +4,7 @@ var countdownHelper = function () {
         HOUR = 60 * MIN,
         DAY = 24 * HOUR
 
-    var deadline = Date.parse('2016-04-16')
+    var deadline = Date.parse('2016-04-14')
 
     var getRemainText = function () {
         var ms = deadline - new Date().getTime()
