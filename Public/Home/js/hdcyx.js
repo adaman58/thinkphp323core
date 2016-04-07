@@ -1,3 +1,21 @@
+var updateOrientation = function () {
+    var orientation = window.orientation;
+    if (orientation === 90 || orientation === 180) {
+        alert('竖屏浏览效果更佳哦！')
+    }
+    switch (orientation) {
+        case 90:
+        case -90:
+            orientation = "landscape";
+            break;
+        default:
+            orientation = "portrait";
+            break;
+    }
+}
+
+window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", updateOrientation, false);
+
 var countdownHelper = function () {
     var $var,
         MIN = 60 * 1000,
