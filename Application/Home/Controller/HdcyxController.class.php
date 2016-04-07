@@ -6,7 +6,7 @@ use Think\Controller;
 
 class HdcyxController extends Controller
 {
-    CONST END_TIME = 1459958400; // 1460563200
+    CONST END_TIME = 1460563200; // 1460563200
     private function redirectAuth()
     {
         redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/index.html')));
