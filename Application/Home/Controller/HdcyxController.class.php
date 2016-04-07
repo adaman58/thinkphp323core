@@ -106,7 +106,7 @@ class HdcyxController extends Controller
         // 描述文字内容过长时，自动换行
         $describe = autowrap(20, 0, $font_path, $data['describe'], 440);
         // 添加描述文字到背景图
-        imagefttext($dst, 20, 0, 73, 430, $font_color, $font_path, $describe);
+        imagefttext($dst, 20, 0, 73, 450, $font_color, $font_path, $describe);
 
         // 获取二维码图片地址
         $qrCode = $this->qrCode($data['openId']);
