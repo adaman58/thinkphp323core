@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 
+use Org\Util\Date;
 use Think\Controller;
 
 class HdcyxController extends Controller
@@ -14,30 +15,34 @@ class HdcyxController extends Controller
     public function index()
     {
         $MP = C('MP');
-        $nickname = session('nickname');
-        if ($nickname || $_GET['code']) {
-            if ($nickname) {
+        $openid = cookie('openid');
+        if ($openid || $_GET['code']) {
+            if ($openid) {
+                $info = D('LoginUser')->findUser($openid);
                 $userInfo = Array(
-                    'nickname' => $nickname,
-                    'unionid' => session('unionid'),
-                    'headimgurl' => session('headimgurl')
+                    'nickname' => $info['nickname'],
+                    'unionid' => $openid,
+                    'headimgurl' => $info['headimgurl']
                 );
             } else {
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
                     $this->redirectAuth();
                 }
-
-                session('nickname', $userInfo['nickname']);
-                session('unionid', $userInfo['unionid']);
-                session('headimgurl', $userInfo['headimgurl']);
+                $openid = $userInfo['unionid'];
+                cookie('openid', $userInfo['unionid'], 604800);
             }
             $this->user_info = $userInfo;
             $this->appid = $MP['APP_ID'];
             $cached_signature = cache_signature();
             $this->assign($cached_signature);
-            $this->assign('has_bm', 0);
-            $this->assign('bm_img', 'http://wx.dreammove.cn/Uploads/new/-1459939120.png');
+
+            $bmInfo = D('ActiveUser')->findUser($openid);
+            if (!empty($bmInfo)) {
+                $this->assign('has_bm', 1);
+                $this->assign('bm_img', $bmInfo['img_path']);
+            }
+
             $this->display();
         } else {
             $this->redirectAuth();
@@ -45,44 +50,47 @@ class HdcyxController extends Controller
     }
 
     /** 报名 **/
-    public function updateData() {
+    public function updateData()
+    {
         $data = array('openId' => $_REQUEST['openId'], 'mobile' => $_REQUEST['mobile'],
-            'name' => $_REQUEST['name'], 'describe' => $_REQUEST['describe'], 'img_path'=>$_REQUEST['image'], 'face_img'=>$_REQUEST['image']);
+            'name' => $_REQUEST['name'], 'describe' => $_REQUEST['describe'], 'img_path' => $_REQUEST['image'], 'face_img' => $_REQUEST['image']);
 
         $img_path = $this->face_img($data);
         $data['img_path'] = $img_path;
+        $data['face_img'] = $img_path;
         $img_path = $this->composeImg($data);
         $data['img_path'] = $img_path;
 
-        $this->ajaxReturn(array('status'=> 1, 'img_path' => $data['img_path']));
+        D('ActiveUser')->addUser($data);
+
+        $this->ajaxReturn(array('status' => 1, 'img_path' => $data['img_path'], 'table_name' => D('ActiveUser')->getTableName()));
     }
 
-    public function sharepage() {
+    public function face_img($data)
+    {
 
-    }
-
-    public function face_img($data) {
-
-        $path = APP_PATH . '../Uploads/face/face_'.$data['openId']. '.png';
+        $path = APP_PATH . '../Uploads/face/face_' . $data['openId'] . '.png';
         $ret = put_file_from_url_content($data['img_path'], $path);
 
         $size = getimagesize($path);
         $image = new \Think\Image();
         $image->open($path);
-        $image->thumb(230, 230);
+        $image->thumb(230, 230, \Think\Image::IMAGE_THUMB_FIXED);
 
         $image->save($path);
-        return $path;
+        $img_url = 'http://' . C('SITE_DOMAIN') . '/Uploads/face/face_' . $data['openId'] . '.png';
+        return $img_url;
     }
 
 
     /** 生成推广图片**/
-    private function composeImg($data) {
+    private function composeImg($data)
+    {
         $img_url = '/Uploads/new/';
         $bg_path = APP_PATH . '../Uploads/base/bg3.png';
         $out_path = APP_PATH . '../Uploads/new/';
         $font_path = APP_PATH . '../Uploads/font/yahei.ttf';
-        $bg1_path = $data['img_path'];
+        $bg1_path = $data['face_img'];
 
         // 设置背景图
         $dst = imagecreatefromstring(file_get_contents($bg_path));
@@ -90,7 +98,7 @@ class HdcyxController extends Controller
         // 头像圆形处理
         $user_img = new \image_cutter($bg1_path);
         // 添加圆形头像到背景图指定位置
-        imagecopy($dst, $user_img->cutted_image, 75, 70, 0, 0, 230,230);
+        imagecopy($dst, $user_img->cutted_image, 75, 70, 0, 0, 230, 230);
         // 文字颜色
         $font_color = imagecolorallocate($dst, 0xca, 0x9f, 0x75);
         // 添加姓名文字到背景图
@@ -115,7 +123,7 @@ class HdcyxController extends Controller
         imagecopy($dst, $src, $x, $y, 0, 0, $src_size[0], $src_size[1]);
 
         $filename = $out_path . $data['openId'] . '-' . NOW_TIME;
-        $img_url = $img_url .$data['openId'] . '-' . NOW_TIME;
+        $img_url = $img_url . $data['openId'] . '-' . NOW_TIME;
         // 保存图片
         switch ($dst_size[2]) {
             case 1://GIF
@@ -136,54 +144,86 @@ class HdcyxController extends Controller
             default:
                 break;
         }
+        $img_url = 'http://' . C('SITE_DOMAIN') . $img_url;
         // 返回图片路径
         return $img_url;
     }
 
     /** 自作二维码图片 **/
-    private function qrCode($openId) {
+    private function qrCode($openId)
+    {
         $url = 'http://my.tv.sohu.com/user/a/wvideo/getQRCode.do?';
-        $text = urlencode('http://wx.dreammove.cn/hdcyx/vote/openId/'.$openId);
-        $url = $url . 'width=200&height=200&text='. $text;
+        $text = urlencode('http://wx.dreammove.cn/hdcyx/vote/openId/' . $openId);
+        $url = $url . 'width=200&height=200&text=' . $text;
 
         return $url;
     }
 
-    public function vote() {
-        $_GET['openId'] = '';
+    public function vote()
+    {
+
         $MP = C('MP');
-        $nickname = session('nickname');
-        $nickname = 'aaaaaaaaaaa';
-        if ($nickname || $_GET['code']) {
-            if ($nickname) {
+        $myOpenId = cookie('openid');
+        $openId = $_GET['openId'];
+        if ($myOpenId || $_GET['code']) {
+            if ($myOpenId) {
+                $info = D('LoginUser')->findUser($myOpenId);
                 $userInfo = Array(
-                    'nickname' => $nickname,
-                    'unionid' => session('unionid'),
-                    'headimgurl' => session('headimgurl')
+                    'nickname' => $info['nickname'],
+                    'unionid' => $myOpenId,
+                    'headimgurl' => $info['headimgurl']
                 );
             } else {
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
-                    $this->redirectAuth();
+                    redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html')));
                 }
-
-                session('nickname', $userInfo['nickname']);
-                session('unionid', $userInfo['unionid']);
-                session('headimgurl', $userInfo['headimgurl']);
+                $myOpenId = $userInfo['unionid'];
+                cookie('openid', $userInfo['unionid'], 604800);
             }
             $this->user_info = $userInfo;
             $this->appid = $MP['APP_ID'];
             $cached_signature = cache_signature();
             $this->assign($cached_signature);
-            $this->assign('nickname', '水长东水长东水长东');
-            $this->assign('headimgurl', 'http://wx.qlogo.cn/mmopen/JWSbnTudFFuW6c8yOHnKUUVfwM3RgBNzHp0icakcvq8S6gdcQNbWT4UlBNVp1MH5nhKkGc5zyD4tWPccSmwd0Yy7foeM9U9NI/0');
+
+
+            $data = D('ActiveUser')->findUser($openId);
+
+            if (!$data) {
+                $this->redirect('index');
+            } else {
+                $vote_count = D('JoinUser')->voteCount($openId);
+                $voteInfo = D('JoinUser')->findUser($myOpenId, $openId, date('Ymd', time()));
+                if (!empty($voteInfo)) {
+                    $this->assign('has_voted', 1);
+                }
+
+                $this->assign('openId', $openId);
+                $this->assign('myOpenId', $myOpenId);
+                $this->assign('vote_count', $vote_count);
+                $this->assign('nickname', $data['name']);
+                $this->assign('headimgurl', $data['face_img']);
+            }
             $this->display();
         } else {
-            $this->redirectAuth();
+            $url = getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html'));
+            redirect($url);
         }
-	}
+    }
 
-    public function votePost() {
-        $this->ajaxReturn(Array('status' => 1));
+    public function votepost()
+    {
+        $openId = $_REQUEST['openId'];
+        $myOpenId = $_REQUEST['myOpenId'];
+
+        $data = array('activeId' => $openId, 'openId' => $myOpenId,
+            'nowDay' => date('Ymd', time()));
+
+        $ret = D('JoinUser')->addUser($data);
+        if ($ret) {
+            $this->ajaxReturn(array('status' => 1, 'info' => '投票成功'));
+        } else {
+            $this->ajaxReturn(array('status' => 0, 'info' => D('JoinUser')->getError()));
+        }
     }
 }

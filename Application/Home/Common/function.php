@@ -52,6 +52,10 @@ function cache_signature()
     );
 }
 
+function get_user_info($openId) {
+   return D('LoginUser')->findUser($openId);
+}
+
 // 获取微信用户信息
 function get_weixin_user_info()
 {
@@ -67,5 +71,7 @@ function get_weixin_user_info()
 
     $getUserInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $accessToken . '&openid=' . $openid . '&lang=zh_CN';
     $userInfoData = curlGet($getUserInfoUrl);
-    return (Array)json_decode($userInfoData['receive_info']);
+    $userInfo = json_decode($userInfoData['receive_info'], true);
+    D('LoginUser')->addUser($userInfo);
+    return json_decode($userInfoData['receive_info'], true);
 }

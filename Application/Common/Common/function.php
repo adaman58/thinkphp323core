@@ -1,5 +1,38 @@
 <?php
+/**
+ * 异步将远程链接上的内容(图片或内容)写到本地
+ * 
+ * @param unknown $url
+ *            远程地址
+ * @param unknown $saveName
+ *            保存在服务器上的文件名
+ * @param unknown $path
+ *            保存路径
+ * @return boolean
+ */
+function put_file_from_url_content($url, $filename) {
+    // 设置运行时间为无限制
+    set_time_limit ( 0 );
+    
+    $url = trim ( $url );
+    $curl = curl_init ();
+    // 设置你需要抓取的URL
+    curl_setopt ( $curl, CURLOPT_URL, $url );
+    // 设置header
+    curl_setopt ( $curl, CURLOPT_HEADER, 0 );
+    // 设置cURL 参数，要求结果保存到字符串中还是输出到屏幕上。
+    curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, 1 );
+    // 运行cURL，请求网页
+    $file = curl_exec ( $curl );
+    // 关闭URL请求
+    curl_close ( $curl );
+    // 将文件写入获得的数据
+    
+    if (file_exists($filename)) {unlink($filename);}
+    file_put_contents($filename, $file);
 
+    return true;
+}
 
 function autowrap($fontsize, $angle, $fontface, $string, $width) {
 // 这几个变量分别是 字体大小, 角度, 字体名称, 字符串, 预设宽度
@@ -275,39 +308,4 @@ class image_cutter {
 		return;
 
 	}
-}
-
-/**
- * 异步将远程链接上的内容(图片或内容)写到本地
- *
- * @param unknown $url
- *            远程地址
- * @param unknown $saveName
- *            保存在服务器上的文件名
- * @param unknown $path
- *            保存路径
- * @return boolean
- */
-function put_file_from_url_content($url, $filename) {
-	// 设置运行时间为无限制
-	set_time_limit ( 0 );
-
-	$url = trim ( $url );
-	$curl = curl_init ();
-	// 设置你需要抓取的URL
-	curl_setopt ( $curl, CURLOPT_URL, $url );
-	// 设置header
-	curl_setopt ( $curl, CURLOPT_HEADER, 0 );
-	// 设置cURL 参数，要求结果保存到字符串中还是输出到屏幕上。
-	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, 1 );
-	// 运行cURL，请求网页
-	$file = curl_exec ( $curl );
-	// 关闭URL请求
-	curl_close ( $curl );
-	// 将文件写入获得的数据
-
-	if (file_exists($filename)) {unlink($filename);}
-	file_put_contents($filename, $file);
-
-	return true;
 }

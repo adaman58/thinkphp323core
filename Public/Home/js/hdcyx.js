@@ -45,12 +45,13 @@ $(function () {
     countdownHelper.init()
     $('.img-support').on('click', function () {
         if (userHasSupport) {
-            dm.notice('你已助威过了')
+            dm.notice('您今天已经助威过了，请您明天再来助威。')
             return
         }
-        $.post($(this).data('voteUrl'), {
-            targetOpenId: '',
-            myOpenId: ''
+        var $this = $(this)
+        $.post($this.data('voteUrl'), {
+            openId: $this.data('openid'),
+            myOpenId: $this.data('myopenid')
         }).then(function (json) {
             if (json.status == 1) {
                 var $count = $('.support-count'),
@@ -60,7 +61,7 @@ $(function () {
                 userHasSupport = 1
                 $('.fly-count-plus').addClass('in')
             } else {
-
+                dm.notice(json.info)
             }
         })
 

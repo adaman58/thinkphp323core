@@ -135,14 +135,14 @@ img{max-width:100%}
 .view-form input[type=file]{position:absolute!important;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);padding:0!important;border:0!important;overflow:hidden}
 body:hover .view-form input[type=file] a,body:hover .view-form input[type=file] button,body:hover .view-form input[type=file] input{display:none!important}
 .view-form label{color:#967B5D;font-size:.75rem;display:block;line-height:2;font-family:fzqkbys,"Lantinghei SC","Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei",微软雅黑,STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif}
+.dib,.view-support .nickname{display:inline-block;*zoom:1}
 .san-serif,.view-support .nickname{font-family:"Lantinghei SC","Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei",微软雅黑,STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif}
 .view-form .btn-generate{margin-top:.8rem}
 .view-form .img-bm{position:absolute;width:100%;bottom:3.5rem;background:url(../img/hdcyx/img-bm.png) center no-repeat;background-size:27%;padding-bottom:31.17857%}
 .view-img{background:url(../img/hdcyx/bg-img.jpg) center no-repeat;background-size:cover;color:#9f948c;font-size:.8rem}
 .view-img .share-hint{margin:.7rem auto;line-height:1.6}
-.view-img .img-generated{display:block;width:80%;margin-left:10%}
-.dib,.view-support .nickname{display:inline-block;*zoom:1}
-.view-img .btn-edit{float:right;margin-top:.8rem;margin-right:10%;padding:2px 10px;border:1px solid;border-radius:3px;font-size:12px}
+.view-img .img-generated{width:14rem}
+.view-img .btn-edit{float:right;margin-top:.5rem;margin-right:3rem;padding:2px 10px;border:1px solid;border-radius:3px;font-size:12px}
 @-webkit-keyframes light-rotate{from{-webkit-transform:rotate(0);transform:rotate(0)}
 to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
 }

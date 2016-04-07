@@ -5,14 +5,14 @@
         <div class="stage fzqkbys tac">
             <h3 class="fwn ellipsis w-94">我愿意助威 <strong class="fwn c-3 nickname">{$nickname}</strong>参与</h3>
             <h2 class="fwn ywsfxs">“聚募众筹之穿越夜”</h2>
-            <div class="img-support" data-vote-url="{:U('hdcyx/votePost')}">
+            <div class="img-support" data-vote-url="{:U('hdcyx/votepost')}" data-openid="{$openId}" data-myopenid="{$myOpenId}">
                 <img class="avatar" src="{$headimgurl}" />
                 <img class="btn-support" src="__IMG__/hdcyx/btn-support.png" alt="">
                 <img class="support-1" src="__IMG__/hdcyx/support-1.png" alt="">
                 <img class="support-2" src="__IMG__/hdcyx/support-2.png" alt="">
             </div>
             <div class="c-3 fz-small text-var por">
-                已有 <strong class="c-danger support-count">123</strong> 人为他助威 &nbsp; &nbsp; &nbsp; &nbsp; 倒数计时: <var class="countdown">3 天 13 小时</var>
+                已有 <strong class="c-danger support-count">{$vote_count}</strong> 人为他助威 &nbsp; &nbsp; &nbsp; &nbsp; 倒数计时: <var class="countdown">3 天 13 小时</var>
                 <strong class="fly-count-plus c-danger">+1</strong>
             </div>
             <div class="fz-small">如果你也想与知名投资人来一场说走就走的旅行！</div>
@@ -33,6 +33,18 @@
 
 <block name="script">
 <script>
-    var userHasSupport = 0
+    var userHasSupport = "{$has_voted}"
+    // 分享
+    var shareTitle = '给 ' + "{$nickname}" + ' 助威，参与“聚募众筹之穿越夜”'
+    var shareObj = {
+        title: shareTitle,
+        desc: shareTitle,
+        link: 'http://wx.dreammove.cn/hdcyx/vote/openId/{$openId}',
+        imgUrl: '{$headimgurl}' || 'http://wx.dreammove.cn/Public/Home/img/hdcyx/img-bm.jpg'
+    }
+    wx.ready(function () {
+        wx.onMenuShareTimeline(shareObj)
+        wx.onMenuShareAppMessage(shareObj)
+    })
 </script>
 </block>
