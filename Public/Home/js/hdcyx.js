@@ -107,6 +107,7 @@ $(function () {
 
     var gotRankingData = function (json) {
         $('.ranking-num').html(json.active_user.rank)
+        $('.bm-count').html(json.active_count)
         var html = '', list = json.top_list
         var r = 0
         for (var key in list) {

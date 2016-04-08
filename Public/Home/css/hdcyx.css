@@ -120,7 +120,7 @@ img{max-width:100%}
 .close{float:right;font-size:21px;line-height:1;color:#000;text-shadow:0 1px 0;opacity:.2;filter:alpha(opacity=20)}
 .close:hover{opacity:.5;filter:alpha(opacity=50)}
 .view-win{height:100%}
-.view{bottom:0;visibility:hidden;opacity:0;filter:alpha(opacity=0);-webkit-transition:all .5s;transition:all .5s;overflow:auto}
+.view{bottom:0;visibility:hidden;opacity:0;filter:alpha(opacity=0);-webkit-transition:all .5s;transition:all .5s;overflow:auto;-webkit-overflow-scrolling:touch}
 .view.in{visibility:visible;opacity:1;filter:alpha(opacity=100)}
 .view-form{background:url(../img/hdcyx/bg-bm.png) center no-repeat;background-size:cover}
 .view-form h3{font-size:1rem;margin-top:1rem;margin-bottom:.5rem}
@@ -151,7 +151,7 @@ to{opacity:0;filter:alpha(opacity=0);-webkit-transform:translateY(-3rem);transfo
 to{opacity:0;filter:alpha(opacity=0);-webkit-transform:translateY(-3rem);transform:translateY(-3rem)}
 }
 .view-ranking,.view-support{background:url(../img/hdcyx/bg-support.png) center no-repeat;background-size:100% 100%;color:#CA9F75}
-.view-ranking .view-content,.view-support .view-content{position:absolute;left:10px;right:10px;top:10px;bottom:10px;border:1px solid;box-shadow:0 0 1px 1px;padding-top:.5rem}
+.view-ranking .view-content,.view-support .view-content{position:absolute;left:10px;right:10px;top:10px;bottom:10px;border:1px solid;padding-top:.5rem}
 .view-ranking h3,.view-support h3{font-size:1.2rem;margin:.5rem auto}
 .view-ranking h2,.view-support h2{font-size:1.5rem;margin:.5rem auto}
 .view-ranking .nickname,.view-support .nickname{color:#173A60;margin-left:.3rem;margin-right:.3rem;vertical-align:bottom;display:inline-block;*display:inline;*zoom:1;max-width:5em;overflow:hidden}
