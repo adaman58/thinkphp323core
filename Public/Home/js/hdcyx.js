@@ -64,7 +64,6 @@ $(function () {
     countdownHelper.init()
 
     var suspendHideModal = function () {
-
         suspendHide = 1
         setTimeout(function () {
             suspendHide = 0
@@ -91,7 +90,7 @@ $(function () {
                 suspendHideModal()
                 $('.fly-count-plus').addClass('in')
             } else {
-                dm.notice(json.info)
+                $('.view-tomorrow').addClass('in')
             }
         })
     })
@@ -101,6 +100,7 @@ $(function () {
         $(this).removeClass('in')
     })
     $('.btn-view-rank').on('click', function () {
+        getRankingData()
         $viewModal.removeClass('in')
         $('.view-ranking').addClass('in')
     })
@@ -119,12 +119,10 @@ $(function () {
         }
         $('.ranking-list').html(html)
     }
-
-    $.post(api.getRankingData, {
-        openId: serverData.openId
-    }).then(gotRankingData)
-
-
-
+    var getRankingData = function () {
+        $.post(api.getRankingData, {
+            openId: serverData.openId
+        }).then(gotRankingData)
+    }
 
 })

@@ -121,6 +121,11 @@
         wx.onMenuShareTimeline(shareObj)
         wx.onMenuShareAppMessage(shareObj)
     })
-
+    $(function () {
+        $('.view-tomorrow').addClass('in')
+        setTimeout(function () {
+            $('.view-tomorrow').removeClass('in')
+        }, 17)
+    })
 </script>
 </block>
