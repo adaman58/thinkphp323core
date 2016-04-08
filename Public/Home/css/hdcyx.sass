@@ -11,6 +11,7 @@ $breakpoints: (tiny: 360px, small: 480px, medium: 768px, large: 1024px)
 
 $c-primary: #CA9F75
 $c-danger: #B61616
+$c-dark-blue: #173A60
 
 @function rem($px)
     @return $px / 1080 * 20rem
@@ -75,6 +76,7 @@ img
     visibility: hidden
     opacity: 0
     transition: all .5s
+    overflow: auto
     &.in
         visibility: visible
         opacity: 1
@@ -155,22 +157,7 @@ img
         border-radius: 3px
         font-size: 12px
 
-@keyframes light-rotate
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(360deg)
 
-.view-success
-    background: rgba(0, 0, 0, .8)
-    overflow: hidden
-    .img-success, .img-success-light
-        position: absolute
-        width: 100%
-        bottom: 1rem
-    &.in
-        .img-success-light
-            animation: light-rotate 5s linear infinite
 
 .s-footer
     position: absolute
@@ -179,6 +166,7 @@ img
     background: url("../img/hdcyx/logo-footer.png") no-repeat center
     background-size: 60% auto
     padding-bottom: 60 / 350 * 60%
+    left: 0
 
 .modal-cropper
     .modal-dialog
@@ -199,11 +187,11 @@ img
         opacity: 0
         transform: translateY(-3rem)
 
-.view-support
+.view-support, .view-ranking
     background: url("../img/hdcyx/bg-support.png") no-repeat center
     background-size: 100% 100%
     color: $c-primary
-    .stage
+    .view-content
         position: absolute
         left: 10px
         right: 10px
@@ -219,7 +207,7 @@ img
         font-size: 1.5rem
         margin: .5rem auto
     .nickname
-        color: #173A60
+        color: $c-dark-blue
         margin-left: .3rem
         margin-right: .3rem
         vertical-align: bottom
@@ -277,10 +265,101 @@ img
         &.in
             animation: fly 1s
 
-.modal-loading
-    .modal-dialog
-        background: url("../img/hdcyx/loading.gif") no-repeat center
-        background-size: 60% auto
-        padding-bottom: 390 / 400 * 60%
+.view-ranking
+    .view-content
+        position: relative
+        margin: 10px
+        left: 0
+        top: 0
+        right: 0
+        bottom: 0
+        padding: 10px 10px 4.5rem
+    h2
+        margin-bottom: 1.5rem
+    .avatar
+        width: 4rem
+        height: 4rem
+        border-radius: 50%
+        margin: 0 1rem 0 0
+    .nickname
+        color: $c-dark-blue
+        font-size: 1.6rem
+    .ranking-title
+        font-size: 1.8rem
+        margin-top: 1.8rem
+        margin-bottom: 1rem
+    .img-ranking
+        background: url("../img/hdcyx/img-ranking.png") no-repeat center
+        background-size: 40% auto
+        padding-bottom: 168 / 271 * 40%
+        margin-bottom: 1.2rem
+    .icon-pm, .icon-bmr, .icon-zwrs
+        background: no-repeat center
+        background-size: auto 100%
+        height: 1.4rem
+    .icon-pm
+        background-image: url(../img/hdcyx/icon-pm.png)
+    .icon-bmr
+        background-image: url(../img/hdcyx/icon-bmr.png)
+    .icon-zwrs
+        background-image: url(../img/hdcyx/icon-zwrs.png)
+    .ranking-list
+        font-size: 1rem
+        li
+            position: relative
+            padding: .5rem 0
+            &:after
+                +absolute-block
+                width: 90%
+                height: 1px
+                bottom: 0
+                left: 5%
+                border-bottom: 1px dashed $c-primary
+    .text-tj
+        font-size: 1rem
+        margin-bottom: 1.6rem
+    .text-smbm
+        font-size: 1.2rem
+        margin-top: 1.5rem
+        margin-bottom: 1rem
+    .s-footer
+        bottom: 1.5rem
+
+
+.view-tomorrow, .view-success
+    height: 100%
+    .btn-wrap
+        position: absolute
+        width: 100%
+        bottom: 2.5rem
+        color: $c-primary
+        font-size: 1.2rem
+    .btn-view-rank
+        width: 60%
+        border: 1px solid $c-primary
+        padding: .5rem
+.view-tomorrow
+    background: rgba(0, 0, 0, .8) url("../img/hdcyx/vote_tomorrow.png") no-repeat center 15%
+    background-size: 70% auto
+
+
+
+@keyframes light-rotate
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+.view-success
+    background: rgba(0, 0, 0, .8)
+    .img-success, .img-success-light
+        position: absolute
+        width: 100%
+        top: 10%
+    &.in
+        .img-success-light
+            animation: light-rotate 5s linear infinite
+
+
 
 @import "../../sass/atom"

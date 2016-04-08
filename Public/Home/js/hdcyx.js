@@ -22,7 +22,7 @@ var countdownHelper = function () {
         HOUR = 60 * MIN,
         DAY = 24 * HOUR
 
-    var deadline = Date.parse('2016-04-14 00:00:00')
+    var deadline = Date.parse('2016/04/14 00:00')
 
     var getRemainText = function () {
         var ms = deadline - new Date().getTime()
@@ -60,10 +60,21 @@ var countdownHelper = function () {
 }()
 
 $(function () {
+    var suspendHide = 0
     countdownHelper.init()
+
+    var suspendHideModal = function () {
+
+        suspendHide = 1
+        setTimeout(function () {
+            suspendHide = 0
+        }, 1000)
+    }
+
     $('.img-support').on('click', function () {
         if (userHasSupport) {
-            dm.notice('您今天已经助威过了，请您明天再来助威。')
+            $('.view-tomorrow').addClass('in')
+            suspendHideModal()
             return
         }
         var $this = $(this)
@@ -77,15 +88,43 @@ $(function () {
                 $count.html(count + 1)
                 $('.view-success').addClass('in')
                 userHasSupport = 1
+                suspendHideModal()
                 $('.fly-count-plus').addClass('in')
             } else {
                 dm.notice(json.info)
             }
         })
-
-
     })
-    $('.view-success').one('click', function () {
+
+    var $viewModal = $('.view-success, .view-tomorrow').on('click', function () {
+        if (suspendHide) return;
         $(this).removeClass('in')
     })
+    $('.btn-view-rank').on('click', function () {
+        $viewModal.removeClass('in')
+        $('.view-ranking').addClass('in')
+    })
+
+    var gotRankingData = function (json) {
+        $('.ranking-num').html(json.active_user.rank)
+        var html = '', list = json.top_list
+        var r = 0
+        for (var key in list) {
+            if (list.hasOwnProperty(key)) {
+                r += 1
+                var data = list[key]
+                data.r = r
+                html += template('top-item', list[key])
+            }
+        }
+        $('.ranking-list').html(html)
+    }
+
+    $.post(api.getRankingData, {
+        openId: serverData.openId
+    }).then(gotRankingData)
+
+
+
+
 })

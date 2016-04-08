@@ -1,39 +1,114 @@
 <extend name="base"/>
 <block name="main">
+
+<script type="text/html" id="top-item">
+    <li class="flex space-around tac aic c-danger">
+        <div class="flex-2 ywsfxs">第{{r}}名</div>
+        <div class="flex-3 san-serif c-3 ellipsis"><img src="" alt="" noerr>{{name}}</div>
+        <div class="flex-2 fwb">{{vote_count||0}}</div>
+    </li>
+</script>
+
 <div class="view-win">
     <div class="view view-support in">
-        <div class="stage fzqkbys tac">
+        <div class="view-content fzqkbys tac">
             <h3 class="fwn ellipsis w-94">我愿意助威 <strong class="fwn c-3 nickname">{$nickname}</strong>参与</h3>
             <h2 class="fwn ywsfxs">“聚募众筹之穿越夜”</h2>
-            <div class="img-support" data-vote-url="{:U('hdcyx/votepost')}" data-openid="{$openId}" data-myopenid="{$myOpenId}">
-                <img class="avatar" src="{$headimgurl}" />
+            <div class="img-support" data-vote-url="{:U('hdcyx/votepost')}" data-openid="{$openId}"
+                 data-myopenid="{$myOpenId}">
+                <img class="avatar" src="{$headimgurl}"/>
                 <img class="btn-support" src="__IMG__/hdcyx/btn-support.png" alt="">
                 <img class="support-1" src="__IMG__/hdcyx/support-1.png" alt="">
                 <img class="support-2" src="__IMG__/hdcyx/support-2.png" alt="">
             </div>
             <div class="c-3 fz-small text-var por">
-                已有 <strong class="c-danger support-count">{$vote_count}</strong> 人为他助威 &nbsp; &nbsp; &nbsp; &nbsp; 倒数计时: <var class="countdown">3 天 13 小时</var>
+                已有 <strong class="c-danger support-count">{$vote_count}</strong> 人为他助威 &nbsp; &nbsp; &nbsp; &nbsp; 倒数计时:
+                <var class="countdown">3 天 13 小时</var>
                 <strong class="fly-count-plus c-danger">+1</strong>
             </div>
             <div class="fz-small">如果你也想与知名投资人来一场说走就走的旅行！</div>
             <div class="fz-small">如果你也想与知名投资机构畅谈未来3年创业方向！</div>
-            <div class="ywsfxs fz-big w-80 hc">仅剩 <strong class="c-danger">3</strong> 个名额<br><u class="fz-bigger"> &nbsp; 等你来抢！</u></div>
+            <div class="ywsfxs fz-big w-80 hc">仅剩 <strong class="c-danger">3</strong> 个名额<br><u class="fz-bigger">
+                &nbsp; 等你来抢！</u></div>
             <div class="qr-bm tac">
                 <img src="__IMG__/hdcyx/qr-bm.png" alt="" class="db w-80 hc">
             </div>
             <div class="s-footer"></div>
         </div>
     </div>
+    <div class="view view-ranking">
+        <div class="view-content fzqkbys">
+            <h2 class="ywsfxs tac c-primary fwn">“聚募众筹之穿越夜”</h2>
+            <div class="flex aic flex-center">
+                <img class="db avatar" src="{$headimgurl}" alt="">
+                <div>
+                    <div class="san-serif nickname">{$nickname}</div>
+                    <div class="c-3">已有 <strong class="c-danger">{$vote_count}</strong> 人为他助威 &nbsp;
+                        <u class="ywsfxs c-danger" style="font-size:1.5em;">第<var class="ranking-num"></var>名</u>
+                    </div>
+                </div>
+            </div>
+            <div class="tac ranking-title ywsfxs c-danger">助威十强排行榜</div>
+            <div class="img-ranking"></div>
+            <div class="flex ranking-table-head space-around">
+                <div class="flex-2 icon-pm"></div>
+                <div class="flex-3 icon-bmr"></div>
+                <div class="flex-2 icon-zwrs"></div>
+            </div>
+            <ul class="p-0 ranking-list">
+
+            </ul>
+
+            <div class="tac c-3 text-tj">共有 <strong class="c-danger">123</strong> 人参与报名</div>
+
+            <div class="tac c-primary">
+                <div class="fz-small">如果你也想与知名投资人来一场说走就走的旅行！</div>
+                <div class="fz-small">如果你也想与知名投资机构畅谈未来3年创业方向！</div>
+                <div class="ywsfxs fz-big w-80 hc">仅剩 <strong class="c-danger">3</strong> 个名额<br><u
+                        class="fz-bigger"> &nbsp; 等你来抢！</u></div>
+                <div class="text-smbm">长按下图扫码二维码报名</div>
+                <div class="w-50 hc">
+                    <img src="__IMG__/hdcyx/qr-bm2.png" alt="">
+                </div>
+            </div>
+            <div class="tac c-3">
+                <br>
+                <div class="">报名倒数计时: <var class="countdown">3 天 13 小时</var></div>
+                <br>
+                <div class="">时间: 4月16-4月17日 &nbsp; 地点：横店</div>
+            </div>
+            <div class="s-footer"></div>
+        </div>
+    </div>
+    <div class="view view-tomorrow">
+        <div class="img-vote-tomorrow"></div>
+        <div class="btn-wrap tac">
+            <div class="btn-view-rank dib">
+                查看排行榜
+            </div>
+        </div>
+    </div>
     <div class="view view-success">
         <img src="__IMG__/hdcyx/support-success-light.png" alt="" class="img-success-light">
         <img src="__IMG__/hdcyx/support-success.png" alt="" class="img-success">
+        <div class="btn-wrap tac">
+            <div class="btn-view-rank dib">
+                查看排行榜
+            </div>
+        </div>
     </div>
 </div>
 </block>
 
 <block name="script">
+<script src="__STATIC__/js/template.js"></script>
 <script>
     var userHasSupport = "{$has_voted}"
+    window.serverData = window.serverData || {}
+    window.api = window.api || {}
+
+    serverData.openId = "{$openId}"
+    api.getRankingData = "{:U('hdcyx/getrank')}"
     // 分享
     var shareTitle = '给 ' + "{$nickname}" + ' 助威，参与“聚募众筹之穿越夜”'
     var shareObj = {
@@ -46,5 +121,6 @@
         wx.onMenuShareTimeline(shareObj)
         wx.onMenuShareAppMessage(shareObj)
     })
+
 </script>
 </block>

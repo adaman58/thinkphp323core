@@ -173,9 +173,9 @@ class HdcyxController extends Controller
 
     public function vote()
     {
-
         $MP = C('MP');
         $myOpenId = cookie('openid');
+        $myOpenId = 'oUzL_sjFfjU2q3izKJ3Eey7hkNP4';
         $openId = $_GET['openId'];
         if ($myOpenId || $_GET['code']) {
             if ($myOpenId) {
@@ -232,16 +232,16 @@ class HdcyxController extends Controller
         }
     }
 
-    public function list2() {
+    public function getrank() {
         $field = array('vote_count' => 1, 'name' => 1, 'face_img'=> 1, 'openId'=>1, '_id'=>1);
-        $list = D('ActiveUser')->order('vote_count desc')->limit(2)->select(array('field' => $field));
+        $list = D('ActiveUser')->order('vote_count desc')->limit(10)->select(array('field' => $field));
         $active_count = D('ActiveUser')->count();
         $active = D('ActiveUser')->where(array('openId' => $_GET['openId']))->find();
         $vote_count = $active['vote_count'] ? $active['vote_count'] : 0;
         $rank = D('ActiveUser')->where(array('vote_count'=> array('gt', $vote_count)))->count();
         $active['rank'] = $rank;
 
-        $data = array('top_list' => $list, 'active_user' => $active);
+        $data = array('top_list' => (Array)$list, 'active_user' => $active);
 
         $this->ajaxReturn($data);
     }
