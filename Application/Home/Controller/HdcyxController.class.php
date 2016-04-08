@@ -19,15 +19,18 @@ class HdcyxController extends Controller
         if ($openid || $_GET['code']) {
             if ($openid) {
                 $info = D('LoginUser')->findUser($openid);
+                if (!$info) {
+                    if(empty($_GET['code'])) {
+                        cookie('openid', null);
+                        $this->redirectAuth();
+                    }
+                }
                 $userInfo = Array(
                     'nickname' => $info['nickname'],
                     'unionid' => $openid,
                     'headimgurl' => $info['headimgurl']
                 );
             } else {
-                if(empty($_GET['code'])) {
-                    $this->redirectAuth();
-                }
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
                     $this->redirectAuth();
@@ -177,15 +180,21 @@ class HdcyxController extends Controller
         if ($myOpenId || $_GET['code']) {
             if ($myOpenId) {
                 $info = D('LoginUser')->findUser($myOpenId);
+
+                if (!$info) {
+                    if(empty($_GET['code'])) {
+                        cookie('openid', null);
+                        redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html')));
+                    }
+                }
+                
                 $userInfo = Array(
                     'nickname' => $info['nickname'],
                     'unionid' => $myOpenId,
                     'headimgurl' => $info['headimgurl']
                 );
             } else {
-                if(empty($_GET['code'])) {
-                    redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html')));
-                }
+                
                 $userInfo = get_weixin_user_info();
                 if ($userInfo['errcode']) {
                     redirect(getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html')));
@@ -221,6 +230,20 @@ class HdcyxController extends Controller
             $url = getAuthUrl(urlencode('http://' . C('SITE_DOMAIN') . '/hdcyx/vote/openId/' . $openId . '.html'));
             redirect($url);
         }
+    }
+
+    public function list2() {
+        $field = array('vote_count' => 1, 'name' => 1, 'face_img'=> 1, 'openId'=>1, '_id'=>1);
+        $list = D('ActiveUser')->order('vote_count desc')->limit(2)->select(array('field' => $field));
+        $active_count = D('ActiveUser')->count();
+        $active = D('ActiveUser')->where(array('openId' => $_GET['openId']))->find();
+        $vote_count = $active['vote_count'] ? $active['vote_count'] : 0;
+        $rank = D('ActiveUser')->where(array('vote_count'=> array('gt', $vote_count)))->count();
+        $active['rank'] = $rank;
+
+        $data = array('top_list' => $list, 'active_user' => $active);
+
+        $this->ajaxReturn($data);
     }
 
     public function votepost()
