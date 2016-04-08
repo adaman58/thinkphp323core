@@ -175,7 +175,7 @@ class HdcyxController extends Controller
     {
         $MP = C('MP');
         $myOpenId = cookie('openid');
-        $myOpenId = 'oUzL_sjFfjU2q3izKJ3Eey7hkNP4';
+        //$myOpenId = 'oUzL_sjFfjU2q3izKJ3Eey7hkNP4';
         $openId = $_GET['openId'];
         if ($myOpenId || $_GET['code']) {
             if ($myOpenId) {

@@ -187,7 +187,7 @@ to{opacity:0;filter:alpha(opacity=0);-webkit-transform:translateY(-3rem);transfo
 .view-ranking .s-footer{bottom:1.5rem}
 .view-success,.view-tomorrow{height:100%}
 .view-success .btn-wrap,.view-tomorrow .btn-wrap{position:absolute;width:100%;bottom:2.5rem;color:#CA9F75;font-size:1.2rem}
-.view-success .btn-view-rank,.view-tomorrow .btn-view-rank{width:60%;border:1px solid #CA9F75;padding:.5rem}
+.view-success .btn-view-rank,.view-tomorrow .btn-view-rank{width:60%;border:2px solid #CA9F75;padding:.5rem;border-radius:5px}
 .view-tomorrow{background:url(../img/hdcyx/vote_tomorrow.png) center 15% no-repeat rgba(0,0,0,.8);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc000000', endColorstr='#cc000000');background-size:70% auto}
 :root .view-tomorrow{filter:none\9}
 @-webkit-keyframes light-rotate{from{-webkit-transform:rotate(0);transform:rotate(0)}
